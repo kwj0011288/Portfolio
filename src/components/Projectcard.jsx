@@ -167,10 +167,11 @@ const ProjectCard = ({
                             </div>
                         </div>
 
-                        <div className="absolute right-4 bottom-2 text-xs flex items-center gap-1 opacity-70 hover:opacity-100 transition-opacity dark:text-zinc-400 light:text-zinc-600 md:flex hidden mt-4">
-                            <span className="material-symbols-rounded text-sm">info</span>
-                            Click for details
+                        <div className="absolute right-4 bottom-2 text-xs flex items-center gap-1 opacity-70 hover:opacity-100 transition-opacity dark:text-zinc-400 text-zinc-600 md:flex hidden mt-4">
+                            <span className="material-symbols-rounded text-base leading-none align-middle">info</span>
+                            <span className="leading-none">Click for details</span>
                         </div>
+
                     </>
                 )}
             </div>
