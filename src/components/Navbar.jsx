@@ -35,9 +35,47 @@ const Navbar = ({ navOpen }) => {
         }
     };
 
+    // Initial setup effect - runs once on mount
+    useEffect(() => {
+        // Wait for the DOM to be fully rendered
+        setTimeout(() => {
+            const initialActive = document.querySelector('.nav-link.active');
+            if (initialActive) {
+                updateActiveBox(initialActive);
+            } else {
+                // If no active link, set the first one (Home) as active
+                const homeLink = document.querySelector('.nav-link[href="#home"]');
+                if (homeLink) {
+                    homeLink.classList.add('active');
+                    updateActiveBox(homeLink);
+                }
+            }
+        }, 100);
+    }, []);
+
     useEffect(() => {
         const handleScroll = () => {
             const sections = navItems.map(item => item.link.substring(1));
+            let foundActive = false;
+
+            // Check if we're at the bottom of the page
+            const isAtBottom = window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 100;
+
+            if (isAtBottom) {
+                // We're near the bottom, so activate the last section (Contact)
+                setActiveSection('contact');
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                const contactLink = document.querySelector('.nav-link[href="#contact"]');
+                if (contactLink) {
+                    contactLink.classList.add('active');
+                    updateActiveBox(contactLink);
+                }
+                return;
+            }
+
+            // Otherwise check each section normally
             for (const section of sections) {
                 const element = document.getElementById(section);
                 if (!element) continue;
@@ -56,7 +94,42 @@ const Navbar = ({ navOpen }) => {
                             updateActiveBox(activeLink);
                         }
                     }
+                    foundActive = true;
                     break;
+                }
+            }
+
+            // If no section was found to be active and we're scrolled down
+            // This helps with gaps between sections
+            if (!foundActive && window.pageYOffset > 100) {
+                // Find the section closest to the viewport
+                let closestSection = null;
+                let closestDistance = Infinity;
+
+                for (const section of sections) {
+                    const element = document.getElementById(section);
+                    if (!element) continue;
+
+                    const rect = element.getBoundingClientRect();
+                    const distance = Math.abs(rect.top);
+
+                    if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestSection = section;
+                    }
+                }
+
+                if (closestSection && activeSection !== closestSection) {
+                    setActiveSection(closestSection);
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+
+                    const activeLink = document.querySelector(`.nav-link[href="#${closestSection}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                        updateActiveBox(activeLink);
+                    }
                 }
             }
         };
