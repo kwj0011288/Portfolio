@@ -1,0 +1,474 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----- base styles ----- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-zinc-900 text-zinc-50;
+}
+
+.dark body {
+  @apply bg-zinc-900 text-zinc-50;
+}
+
+.light body {
+  @apply bg-zinc-50 text-zinc-900;
+}
+
+/*---- headline -----*/
+.headline-1 {
+  @apply max-w-max;
+  background-image: -webkit-linear-gradient(0deg, #fafafa, #a1a1aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.light .headline-1 {
+  background-image: -webkit-linear-gradient(0deg, #18181b, #3f3f46);
+}
+
+.headline-1 {
+  @apply text-5xl leading-tight font-semibold lg:text-[55px] lg:leading-[1.15];
+}
+
+.headline-2 {
+  @apply text-3xl lg:text-4xl lg:leading-tight font-semibold;
+}
+.title-1 {
+  @apply text-[22px] font-normal;
+}
+
+/*---- utlizity -----*/
+.material-symbols-rounded {
+  @apply w-[1em] h-[1em] overflow-hidden;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.container {
+  @apply px-4 mx-auto lg:px-8 xl:max-w-6xl;
+}
+
+.img-box {
+  @apply bg-zinc-700 overflow-hidden;
+}
+
+.light .img-box {
+  @apply bg-zinc-200;
+}
+
+.img-cover {
+  @apply object-cover w-full h-full;
+}
+
+.section {
+  @apply pt-20 lg:pt-32;
+}
+
+.reveal-up {
+  @apply translate-y-20 opacity-0;
+}
+
+.work-reveal {
+  @apply translate-y-20 opacity-0;
+}
+
+/* ----- components ----- */
+
+/*menu btn*/
+.menu-btn {
+  @apply w-10 h-10 grid place-items-center bg-zinc-50/10 rounded-xl 
+  ring-inset ring-1 ring-zinc-50/[0.02]
+  backdrop-blur-2xl hover:bg-zinc-50/15 transition duration-300 ease-in-out transform active:scale-95;
+}
+
+.light .menu-btn {
+  @apply bg-zinc-800/10 ring-zinc-800/[0.02] hover:bg-zinc-800/15;
+}
+
+.menu-btn span {
+  @apply text-zinc-400;
+}
+
+/* ----- navBar ----- */
+.navbar {
+  @apply absolute top-full mt-2 right-0 min-w-40 p-2 
+    bg-zinc-50/10 rounded-2xl ring-inset ring-1 ring-zinc-50/5
+    scale-90 isolate blur-sm opacity-0 invisible transition-all duration-300 ease-in-out
+    md:static md:flex md:items-center md:mt-0 md:opacity-100 md:blur-0
+    md:visible md:scale-100 backdrop-blur-2xl;
+}
+
+.light .navbar {
+  @apply bg-zinc-800/10 ring-zinc-800/5;
+}
+
+.navbar.active {
+  @apply opacity-100 scale-100 blur-0 visible;
+}
+
+.nav-link {
+  @apply grid items-center h-9 px-4 text-sm font-medium tracking-wide text-zinc-50/50 hover:text-zinc-50 transition-colors;
+}
+
+.light .nav-link {
+  @apply text-zinc-900/50 hover:text-zinc-900;
+}
+
+.nav-link.active {
+  @apply text-zinc-900 duration-500;
+}
+
+.light .nav-link.active {
+  @apply text-zinc-50;
+}
+
+.navbar .active-box {
+  @apply absolute bg-zinc-50 rounded-lg -z-10 transition-[top,left] duration-300;
+}
+
+.light .navbar .active-box {
+  @apply bg-zinc-800;
+}
+
+/*button*/
+.btn {
+  @apply max-w-max h-9 flex items-center gap-2 px-4 rounded-xl font-medium text-sm ring-1 ring-zinc-50/5 ring-inset transition-[background-color];
+}
+
+.light .btn {
+  @apply ring-zinc-800/5;
+}
+
+.btn-secondary {
+  @apply bg-zinc-50 text-zinc-900 active:bg-zinc-50/80;
+}
+
+.light .btn-secondary {
+  @apply bg-zinc-800 text-zinc-50 active:bg-zinc-800/80;
+}
+
+.btn-secondary:hover {
+  @apply bg-zinc-50/80;
+}
+
+.light .btn-secondary:hover {
+  @apply bg-zinc-800/80;
+}
+
+.btn .material-symbols-rounded {
+  @apply text-[18px];
+}
+
+.btn:has(.material-symbols-rounded) {
+  @apply pr-2;
+}
+
+.btn-primary {
+  @apply h-11 bg-sky-400 text-zinc-950 hover:bg-sky-300 active:bg-sky-400;
+}
+
+.btn-primary:hover {
+  @apply bg-sky-300;
+}
+
+.btn-outline {
+  @apply h-11 bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-800;
+}
+
+.light .btn-outline {
+  @apply bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-200;
+}
+
+/* ----- form ----- */
+.label {
+  @apply block text-zinc-200 text-sm font-normal mb-2;
+}
+
+.light .label {
+  @apply text-zinc-700;
+}
+
+.text-field {
+  @apply block outline-none w-full px-3
+  py-3 text-sm bg-zinc-800 rounded-xl ring-1 ring-inset ring-transparent transition-shadow hover:ring-zinc-50/5 focus:ring-sky-400 focus:ring-2;
+}
+
+.light .text-field {
+  @apply bg-zinc-200 hover:ring-zinc-800/5;
+}
+
+.text-field:placeholder {
+  @apply text-zinc-400;
+}
+
+.text-field:focus {
+  @apply ring-sky-400;
+}
+
+/* Header styles */
+header {
+  @apply bg-gradient-to-b from-zinc-900 to-zinc-900;
+}
+
+.light header {
+  @apply bg-gradient-to-b from-zinc-50 to-zinc-50;
+}
+
+/* Theme toggle button */
+.light .ThemeToggle button {
+  @apply bg-zinc-800/10 ring-zinc-800/[0.02] hover:bg-zinc-800/15;
+}
+
+/* Scrollbar styling */
+.dark {
+  @apply scrollbar-thumb-zinc-800 scrollbar-track-zinc-500;
+}
+
+.light {
+  @apply scrollbar-thumb-zinc-300 scrollbar-track-zinc-100;
+}
+
+/* About section light mode */
+.light .bg-zinc-800\/50 {
+  @apply bg-zinc-100 text-zinc-800;
+}
+
+.light .text-zinc-300 {
+  @apply text-zinc-700;
+}
+
+/* ProjectCard light mode fixes */
+.light .dark\:bg-zinc-800 {
+  @apply bg-white;
+}
+
+.light .dark\:hover\:bg-zinc-700\/50 {
+  @apply hover:bg-gray-50;
+}
+
+.light .dark\:active\:bg-zinc-700\/60 {
+  @apply active:bg-gray-100;
+}
+
+.light .dark\:ring-1 {
+  @apply ring-1;
+}
+
+.light .dark\:ring-inset {
+  @apply ring-inset;
+}
+
+.light .dark\:ring-zinc-50\/5 {
+  @apply ring-zinc-900/20;
+}
+
+.light .dark\:bg-zinc-700 {
+  @apply bg-gray-200;
+}
+
+.light .dark\:bg-zinc-800\/90 {
+  @apply bg-white shadow-md ring-1 ring-zinc-900/10;
+}
+
+.light .dark\:text-zinc-100 {
+  @apply text-zinc-800;
+}
+
+.light .dark\:bg-zinc-700 {
+  @apply bg-zinc-100;
+}
+
+.light .dark\:text-zinc-200 {
+  @apply text-zinc-700;
+}
+
+.light .dark\:hover\:bg-zinc-600 {
+  @apply hover:bg-gray-200;
+}
+
+.light .dark\:text-zinc-300 {
+  @apply text-zinc-600;
+}
+
+/* Work experience section fallback */
+.light .bg-zinc-800\/70 {
+  @apply bg-white shadow-md ring-1 ring-zinc-900/5;
+}
+
+.light .group:hover .bg-zinc-800\/70 {
+  @apply bg-zinc-50 ring-1 ring-zinc-900/10;
+}
+
+/* Additional light mode styles */
+.light .text-zinc-400 {
+  @apply text-zinc-500;
+}
+
+.light h3:not([class*="text-"]) {
+  @apply text-zinc-800;
+}
+
+/* Skills section specific */
+.light .ring-zinc-50\/10 {
+  @apply ring-zinc-900/10 ring-1 shadow-sm;
+}
+
+/* Fix any remaining light mode inconsistencies */
+.light .bg-zinc-800\/50 {
+  @apply bg-white;
+}
+
+.light .hover\:bg-zinc-800 {
+  @apply hover:bg-zinc-100;
+}
+
+.light .group-hover\:bg-zinc-900 {
+  @apply group-hover:bg-zinc-300;
+}
+
+/* Ensure headline-2 is visible in light mode */
+.light .headline-2 {
+  @apply text-zinc-800;
+}
+
+/* Fix work experience text colors */
+.light .dark\:text-zinc-50 {
+  color: #27272a; /* zinc-800 */
+}
+
+/* Fix for text-zinc-50 in light mode without @apply */
+.light [class*="text-zinc-50"] {
+  color: #27272a; /* zinc-800 */
+}
+
+.light .dark\:text-zinc-100 {
+  @apply text-zinc-800;
+}
+
+.light .dark\:text-zinc-200 {
+  @apply text-zinc-700;
+}
+
+.light .dark\:text-zinc-300 {
+  @apply text-zinc-600;
+}
+
+.light .dark\:text-zinc-400 {
+  @apply text-zinc-500;
+}
+
+.light .dark\:bg-zinc-800\/90 {
+  @apply bg-white shadow-md ring-1 ring-zinc-900/10;
+}
+
+.light .dark\:bg-zinc-800\/70 {
+  @apply bg-white shadow-md ring-1 ring-zinc-900/5;
+}
+
+.light .group:hover .dark\:bg-zinc-800\/70 {
+  @apply bg-zinc-50 ring-1 ring-zinc-900/10;
+}
+
+.light .dark\:bg-zinc-700 {
+  @apply bg-zinc-100;
+}
+
+/* Make sure tech tags are properly styled in light mode */
+.light .dark\:bg-zinc-700.dark\:text-zinc-200 {
+  @apply bg-zinc-100 text-zinc-700;
+}
+
+/* Theme toggle button specific styles */
+.ThemeToggle button {
+  @apply p-0 flex items-center justify-center;
+}
+
+.light .ThemeToggle button img {
+  @apply opacity-80;
+}
+
+.dark .ThemeToggle button img {
+  @apply opacity-90;
+}
+
+/* Fix skills section */
+.light p.text-zinc-400 {
+  @apply text-zinc-500;
+}
+
+/* Make sure skill cards match other card styles in light mode - Fix circular dependencies */
+.light [class*="bg-zinc-100"] {
+  background-color: #ffffff; /* white */
+}
+
+/* Fix hover styles without circular dependencies */
+.light .hover\:bg-zinc-200:hover {
+  background-color: rgb(249 250 251) !important; /* gray-50 */
+}
+
+/* Skills section specific */
+.light .ring-zinc-50\/10 {
+  @apply ring-zinc-900/10 ring-1 shadow-sm;
+}
+
+/* Fix circular dependency by using a more specific approach */
+.light [class*="bg-zinc-200"] {
+  background-color: #f3f4f6; /* gray-100 */
+}
+
+/* Group hover fix for light mode */
+.light .group:hover [class*="group-hover\:bg-zinc-300"] {
+  background-color: rgb(229 231 235); /* gray-200 */
+}
+
+/* Workcard light mode fixes - Removed circular dependency */
+.light .dark\:text-zinc-50 {
+  color: #27272a; /* zinc-800 */
+}
+
+/* Fix for text-zinc-50 in light mode without @apply */
+.light [class*="text-zinc-50"] {
+  color: #27272a; /* zinc-800 */
+}
+
+.light .dark\:text-zinc-100 {
+  @apply text-zinc-800;
+}
+
+.light .dark\:text-zinc-200 {
+  @apply text-zinc-700;
+}
+
+.light .dark\:text-zinc-300 {
+  @apply text-zinc-600;
+}
+
+.light .dark\:text-zinc-400 {
+  @apply text-zinc-500;
+}
+
+.light .dark\:bg-zinc-800\/90 {
+  @apply bg-white shadow-md ring-1 ring-zinc-900/10;
+}
+
+.light .dark\:bg-zinc-800\/70 {
+  @apply bg-white shadow-md ring-1 ring-zinc-900/5;
+}
+
+.light .group:hover .dark\:bg-zinc-800\/70 {
+  @apply bg-zinc-50 ring-1 ring-zinc-900/10;
+}
+
+.light .dark\:bg-zinc-700 {
+  @apply bg-zinc-100;
+}
+
+/* Make sure tech tags are properly styled in light mode */
+.light .dark\:bg-zinc-700.dark\:text-zinc-200 {
+  @apply bg-zinc-100 text-zinc-700;
+}
