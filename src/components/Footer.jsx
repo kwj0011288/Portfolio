@@ -108,7 +108,7 @@ const Footer = () => {
                     </a>
 
                     <p className="text-zinc-500 text-sm reveal-up">
-                        &copy; 2025 <span className="text-zinc-200">Wonjae Kim</span>
+                        &copy; 2025 <span className="font-medium dark:text-zinc-200 text-zinc-900">Wonjae Kim</span>
                     </p>
                 </div>
             </div>
