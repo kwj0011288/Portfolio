@@ -1,5 +1,4 @@
 import React from 'react'
-import { ButtonPrimary, ButtonOutline } from './button'
 import me from '../assets/me.png';
 import resumePDF from '../assets/Wonjae Kim Resume.pdf';
 import wonjae from '../assets/wonjae.jpeg';
