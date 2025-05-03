@@ -1,5 +1,4 @@
 import React from "react";
-import { ButtonPrimary } from "./button";
 import logo from "../assets/hero.png";
 const sitemap = [
     {
