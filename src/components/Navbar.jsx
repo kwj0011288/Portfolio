@@ -20,8 +20,9 @@ const Navbar = ({ navOpen }) => {
         const width = Math.round(rect.width);
         const height = Math.round(rect.height);
 
-        // Fade out
+        // Fade out and make transparent
         activeBox.current.style.opacity = '0';
+        activeBox.current.style.backgroundColor = 'transparent';
 
         // After a short delay, update position and fade in
         setTimeout(() => {
@@ -31,8 +32,9 @@ const Navbar = ({ navOpen }) => {
             activeBox.current.style.width = `${width}px`;
             activeBox.current.style.height = `${height}px`;
 
-            // Fade in
+            // Fade in with proper color
             setTimeout(() => {
+                activeBox.current.style.backgroundColor = ''; // Use default color from CSS
                 activeBox.current.style.opacity = '1';
             }, 50);
         }, 150);
@@ -51,6 +53,7 @@ const Navbar = ({ navOpen }) => {
         // Fade transition for indicator when clicking
         if (activeBox.current) {
             activeBox.current.style.opacity = '0';
+            activeBox.current.style.backgroundColor = 'transparent';
 
             setTimeout(() => {
                 updateActiveBox(current);
@@ -70,47 +73,52 @@ const Navbar = ({ navOpen }) => {
     useEffect(() => {
         mounted.current = true;
 
-        // Set initial opacity to 0
+        // Hide active-box initially
         if (activeBox.current) {
             activeBox.current.style.opacity = '0';
+            activeBox.current.style.backgroundColor = 'transparent';
         }
 
-        // First check quickly after render
+        // First check quickly after render but keep it invisible
         requestAnimationFrame(() => {
-            if (!mounted.current) return;
+            if (!mounted.current || !activeBox.current) return;
 
             const initialActive = document.querySelector('.nav-link.active');
             if (initialActive) {
-                updateActiveBox(initialActive);
+                const parentRect = initialActive.parentElement.getBoundingClientRect();
+                const rect = initialActive.getBoundingClientRect();
+
+                // Position without showing
+                activeBox.current.style.top = `${Math.round(rect.top - parentRect.top)}px`;
+                activeBox.current.style.left = `${Math.round(rect.left - parentRect.left)}px`;
+                activeBox.current.style.width = `${Math.round(rect.width)}px`;
+                activeBox.current.style.height = `${Math.round(rect.height)}px`;
             } else {
                 // If no active link, set the first one (Home) as active
                 const homeLink = document.querySelector('.nav-link[href="#home"]');
                 if (homeLink) {
                     homeLink.classList.add('active');
-                    updateActiveBox(homeLink);
+
+                    const parentRect = homeLink.parentElement.getBoundingClientRect();
+                    const rect = homeLink.getBoundingClientRect();
+
+                    // Position without showing
+                    activeBox.current.style.top = `${Math.round(rect.top - parentRect.top)}px`;
+                    activeBox.current.style.left = `${Math.round(rect.left - parentRect.left)}px`;
+                    activeBox.current.style.width = `${Math.round(rect.width)}px`;
+                    activeBox.current.style.height = `${Math.round(rect.height)}px`;
                 }
             }
         });
 
-        // Wait for the DOM to be fully rendered
+        // Wait for component to fully render, then make indicator visible
         setTimeout(() => {
-            if (!mounted.current) return;
+            if (!mounted.current || !activeBox.current) return;
 
-            const activeLink = document.querySelector('.nav-link.active');
-            if (activeLink) {
-                updateActiveBox(activeLink);
-            }
-        }, 500); // Increased timeout to ensure layout is fully computed
-
-        // Run this adjustment again after a moment to ensure layout is stable
-        setTimeout(() => {
-            if (!mounted.current) return;
-
-            const activeLink = document.querySelector('.nav-link.active');
-            if (activeLink) {
-                updateActiveBox(activeLink);
-            }
-        }, 1000);
+            // Now make it visible with proper color
+            activeBox.current.style.backgroundColor = ''; // Use default color from CSS
+            activeBox.current.style.opacity = '1';
+        }, 800);
 
         return () => {
             mounted.current = false;
@@ -253,7 +261,7 @@ const Navbar = ({ navOpen }) => {
                 ref={activeBox}
                 style={{
                     position: 'absolute',
-                    transition: 'opacity 0.2s ease-in-out',
+                    transition: 'opacity 0.2s ease-in-out, background-color 0.2s ease-in-out',
                     opacity: '1',
                     zIndex: -1
                 }}
