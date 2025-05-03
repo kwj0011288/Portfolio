@@ -4,17 +4,38 @@ import PropTypes from 'prop-types';
 const Navbar = ({ navOpen }) => {
     const activeBox = useRef(null);
     const [activeSection, setActiveSection] = useState('home');
+    const mounted = useRef(false);
 
     const updateActiveBox = (element) => {
         if (!element || !activeBox.current) return;
 
+        // Get parent nav element
         const parentRect = element.parentElement.getBoundingClientRect();
+        // Get current element rect
         const rect = element.getBoundingClientRect();
 
-        activeBox.current.style.top = `${rect.top - parentRect.top}px`;
-        activeBox.current.style.left = `${rect.left - parentRect.left}px`;
-        activeBox.current.style.width = `${rect.width}px`;
-        activeBox.current.style.height = `${rect.height}px`;
+        // Calculate exact positioning
+        const top = Math.round(rect.top - parentRect.top);
+        const left = Math.round(rect.left - parentRect.left);
+        const width = Math.round(rect.width);
+        const height = Math.round(rect.height);
+
+        // Fade out
+        activeBox.current.style.opacity = '0';
+
+        // After a short delay, update position and fade in
+        setTimeout(() => {
+            // Apply precise positioning
+            activeBox.current.style.top = `${top}px`;
+            activeBox.current.style.left = `${left}px`;
+            activeBox.current.style.width = `${width}px`;
+            activeBox.current.style.height = `${height}px`;
+
+            // Fade in
+            setTimeout(() => {
+                activeBox.current.style.opacity = '1';
+            }, 50);
+        }, 150);
     };
 
 
@@ -26,7 +47,17 @@ const Navbar = ({ navOpen }) => {
 
         const current = event.currentTarget;
         current.classList.add('active');
-        updateActiveBox(current);
+
+        // Fade transition for indicator when clicking
+        if (activeBox.current) {
+            activeBox.current.style.opacity = '0';
+
+            setTimeout(() => {
+                updateActiveBox(current);
+            }, 150);
+        } else {
+            updateActiveBox(current);
+        }
 
         const target = document.querySelector(link);
         if (target) {
@@ -37,8 +68,17 @@ const Navbar = ({ navOpen }) => {
 
     // Initial setup effect - runs once on mount
     useEffect(() => {
-        // Wait for the DOM to be fully rendered
-        setTimeout(() => {
+        mounted.current = true;
+
+        // Set initial opacity to 0
+        if (activeBox.current) {
+            activeBox.current.style.opacity = '0';
+        }
+
+        // First check quickly after render
+        requestAnimationFrame(() => {
+            if (!mounted.current) return;
+
             const initialActive = document.querySelector('.nav-link.active');
             if (initialActive) {
                 updateActiveBox(initialActive);
@@ -50,7 +90,31 @@ const Navbar = ({ navOpen }) => {
                     updateActiveBox(homeLink);
                 }
             }
-        }, 100);
+        });
+
+        // Wait for the DOM to be fully rendered
+        setTimeout(() => {
+            if (!mounted.current) return;
+
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) {
+                updateActiveBox(activeLink);
+            }
+        }, 500); // Increased timeout to ensure layout is fully computed
+
+        // Run this adjustment again after a moment to ensure layout is stable
+        setTimeout(() => {
+            if (!mounted.current) return;
+
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) {
+                updateActiveBox(activeLink);
+            }
+        }, 1000);
+
+        return () => {
+            mounted.current = false;
+        };
     }, []);
 
     useEffect(() => {
@@ -184,7 +248,16 @@ const Navbar = ({ navOpen }) => {
                     {label}
                 </a>
             ))}
-            <div className="active-box" ref={activeBox}></div>
+            <div
+                className="active-box"
+                ref={activeBox}
+                style={{
+                    position: 'absolute',
+                    transition: 'opacity 0.2s ease-in-out',
+                    opacity: '1',
+                    zIndex: -1
+                }}
+            ></div>
         </nav>
     );
 };
