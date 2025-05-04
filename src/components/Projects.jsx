@@ -4,6 +4,7 @@ import august from '../assets/projects/august.png';
 import coupleai from '../assets/projects/coupleai.png';
 import animalmatch from '../assets/projects/animal.jpg';
 import DrTeragotchi from '../assets/projects/DrTeragotchi.jpg';
+import Portfolio from '../assets//hero.png';
 const projects = [
     {
         imgSrc: august,
@@ -35,7 +36,16 @@ const projects = [
         projectLink: '',  // Add link if available
         githubLink: 'https://github.com/kwj0011288/Dr-Teragotchi',
         description: 'Dr. Theragotchi is a unique AI pet designed to respond to your emotions, offering a fun and engaging way to boost mental well-being by creating a personal connection that evolves over time. By chatting daily, earning points, and watching your pet grow, users not only enjoy emotional support but also track their mental health in a gamified format. Just like how gamers search for Traffic Rider APK iOS to enhance their racing experience on Apple devices, Dr. Theragotchi adds that same level of personalized enjoyment and interaction—only with a meaningful focus on emotional wellness.'
+    },
+    {
+        imgSrc: Portfolio,
+        title: 'Portfolio',
+        tags: ['React', 'Tailwind CSS', 'JavaScript', 'Vite'],
+        projectLink: 'https://wkim-dev.tech',
+        githubLink: 'https://github.com/kwj0011288/Portfolio',
+        description: 'This is my portfolio website that showcases my projects and skills.'
     }
+
 
 ];
 const Projects = () => {
