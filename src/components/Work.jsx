@@ -99,23 +99,20 @@ const workItem = [
 
 const Work = () => {
     return (
-        <section id="work" className="section">
+        <section id="work" className="section pb-10">
             <div className="container px-3 md:px-4">
                 <h2 className='headline-2 reveal-up'>Work Experience</h2>
 
-                <p className='text-zinc-500 dark:text-zinc-400 mt-3 mb-8 max-w-[50ch] reveal-up'>
+                <p className='text-zinc-500 dark:text-zinc-400 mt-3 mb-6 md:mb-8 max-w-[50ch] reveal-up'>
                     My Journey as a Developer, Researcher, and Innovator
                 </p>
 
                 {/* 워크 카드 컨테이너 */}
-                <div className="relative work-reveal">
-                    {/* Timeline line - 모바일에서는 숨김, 중간 크기 이상에서만 표시 */}
-                    <div className="hidden md:block absolute left-[115px] top-6 bottom-0 w-0.5 bg-gradient-to-b from-sky-400/50 to-emerald-400/50 rounded-full"></div>
-
-                    <div className="relative">
+                <div className="relative work-reveal pt-2">
+                    <div className="relative space-y-8 md:space-y-8">
                         {workItem.map((experience, key) => (
-                            <div key={key} className="reveal-up">
-                                <WorkCard experience={experience} isLast={key === workItem.length - 1} />
+                            <div key={key} className="reveal-up mb-8 md:mb-0">
+                                <WorkCard experience={experience} />
                             </div>
                         ))}
                     </div>

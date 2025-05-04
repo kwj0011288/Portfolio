@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SkillCard = ({ imgSrc, label, desc, classes }) => {
+const SkillCard = ({ imgSrc, label, desc, className }) => {
   return (
     <div
       className={`flex items-center gap-3 rounded-2xl p-3 transition-all 
@@ -9,7 +9,7 @@ const SkillCard = ({ imgSrc, label, desc, classes }) => {
       ring-1 ring-zinc-200 dark:ring-zinc-50/10
       hover:bg-zinc-50 dark:hover:bg-zinc-700/50
       hover:ring-zinc-300 dark:hover:ring-zinc-50/20
-      ${classes}`}
+      ${className}`}
     >
       <figure
         className={`bg-white dark:bg-zinc-700/50 rounded-lg overflow-hidden w-12 h-12 p-2 
@@ -29,7 +29,7 @@ SkillCard.propTypes = {
   imgSrc: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   desc: PropTypes.string.isRequired,
-  classes: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default SkillCard;

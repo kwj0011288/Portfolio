@@ -106,6 +106,12 @@ const skillItem = [
 
 
 const Skill = () => {
+    // 각 카드에 대한 딜레이 계산 함수
+    const getAnimationDelay = (index) => {
+        // 기본 딜레이 0.1초에 인덱스에 따라 0.05초씩 증가
+        return `${0.1 + index * 0.05}s`;
+    };
+
     return (
         <section id="skills" className='section py-16'>
             <div className='container'>
@@ -116,21 +122,24 @@ const Skill = () => {
                     Discover the powerful tools and technologies I use to create exceptional, high-performing websites & applications.
                 </p>
 
-                <div className='grid gap-3 grid-cols-[repeat(auto-fill,minmax(250px,1fr))] reveal-up'>
-
+                <div className='grid gap-3 grid-cols-[repeat(auto-fill,minmax(250px,1fr))]'>
                     {
-                        skillItem.map(({ imgSrc, label, desc }, key) => (
-                            <SkillCard
-                                imgSrc={imgSrc}
-                                label={label}
-                                desc={desc}
-                                key={key}
-                                className='reveal-up'
-                            />
+                        skillItem.map(({ imgSrc, label, desc }, index) => (
+                            <div
+                                className="reveal-up"
+                                style={{ animationDelay: getAnimationDelay(index) }}
+                                key={index}
+                            >
+                                <SkillCard
+                                    imgSrc={imgSrc}
+                                    label={label}
+                                    desc={desc}
+                                    className=''
+                                />
+                            </div>
                         ))
                     }
                 </div>
-
             </div>
         </section>
     );

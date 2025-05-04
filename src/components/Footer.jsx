@@ -51,10 +51,10 @@ const Footer = () => {
                         <h2 className="headline-1 mb-5 lg:max-w-[12ch] reveal-up">
                             Wonjae Kim
                         </h2>
-                        <p className='text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 font-medium text-lg tracking-wide mb-2'>
+                        <p className='text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 font-medium text-lg tracking-wide mb-2 reveal-up'>
                             Software Engineer & Full-Stack Developer
                         </p>
-                        <p className='text-zinc-400 text-lg mb-6 lg:mb-8 italic'>
+                        <p className='text-zinc-400 text-lg mb-6 lg:mb-8 italic reveal-up'>
                             Junior Computer Science Student at UMCP
                         </p>
                     </div>
@@ -76,7 +76,7 @@ const Footer = () => {
                             </ul>
                         </div>
                         <div>
-                            <p className="mb-2">Socials</p>
+                            <p className="mb-2 reveal-up">Socials</p>
                             <ul>
                                 {socials.map(({ label, href }, key) => (
                                     <li key={key}>
