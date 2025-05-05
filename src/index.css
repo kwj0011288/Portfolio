@@ -472,3 +472,12 @@ header {
 .light .dark\:bg-zinc-700.dark\:text-zinc-200 {
   @apply bg-zinc-100 text-zinc-700;
 }
+
+/* ----- Personal Statement Styles ----- */
+.light .light-card {
+  @apply bg-zinc-200/50 ring-zinc-800/10 hover:ring-zinc-800/20;
+}
+
+.light .light-statement-block {
+  @apply bg-zinc-300/50 hover:bg-zinc-300 ring-zinc-800/5 hover:ring-zinc-800/10;
+}

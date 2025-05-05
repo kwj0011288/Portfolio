@@ -25,6 +25,7 @@ const Navbar = ({ navOpen }) => {
     const navItems = [
         { label: 'Home', link: '#home' },
         { label: 'About', link: '#about' },
+        { label: 'Personal Statement', link: '#personal-statement' },
         { label: 'Skills', link: '#skills' },
         { label: 'Experience', link: '#work' },
         { label: 'Projects', link: '#projects' },

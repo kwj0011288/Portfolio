@@ -7,6 +7,7 @@ import Projects from './components/Projects';
 import Work from './components/Work';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import PersonalStatement from './components/PersonalStatement';
 
 import { ReactLenis } from 'lenis/react';
 import gsap from 'gsap';
@@ -90,6 +91,7 @@ const App = () => {
         <main>
           <Hero />
           <About />
+          <PersonalStatement />
           <Skill />
           <Work />
           <Projects />
