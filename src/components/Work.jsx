@@ -13,7 +13,11 @@ const workItem = [
         label: 'Inzone',
         position: 'Software Engineer Intern',
         desc: [
-            'Incoming Intern...'
+            'Incoming Intern...',
+            'Developed and optimized cross-platform Flutter UIs for iOS and Android, ensuring responsive and smooth user experiences',
+            'Integrated lightweight 3D avatar SDKs with interactive animations to enhance user engagement',
+            'Designed and implemented marketplace screens for digital asset browsing, purchasing, and equipping',
+            'Collaborated with back-end engineers and UI/UX designers to deliver clean, scalable, and well-documented code'
         ],
         tech: ['Python', 'Firebase', 'Git', 'Flutter'],
         startDate: 'June 2025',
