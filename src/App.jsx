@@ -103,7 +103,7 @@ const App = () => {
           </div> */}
           <About />
 
-          <PersonalStatement />
+          {/* <PersonalStatement /> */}
           <Skill />
           <Work />
           <Projects />
