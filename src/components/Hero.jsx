@@ -35,7 +35,7 @@ const statusMap = {
 
 
 // 바꿔가면서 쓸 수 있음
-const currentStatus = "incomingIntern"; // "working", "internship", "unavailable"
+const currentStatus = "working"; // "working", "internship", "unavailable"
 
 const Hero = () => {
     const status = statusMap[currentStatus];
@@ -64,7 +64,7 @@ const Hero = () => {
                             Software Engineer & Full-Stack Developer
                         </p>
                         <p className='text-zinc-400 text-lg mb-6 lg:mb-8 italic'>
-                            Junior Computer Science Student at UMCP
+                            Senior Computer Science Student at UMCP
                         </p>
                         <div className='flex items-center gap-3'>
                             <ButtonPrimary
