@@ -6,22 +6,22 @@ import git from "../assets/works/git.png";
 import umd from "../assets/works/umd.svg";
 import military from "../assets/works/military.jpeg";
 import inzone from "../assets/works/inzone.png";
-import noIcon from "../assets/works/no_icon.png";
+// import noIcon from "../assets/works/no_icon.png";
 
 const workItem = [
-  {
-    imgSrc: noIcon,
-    label: "EOB Processor",
-    position: "Software Engineer Intern",
-    desc: [
-      "Built a document processing pipeline for healthcare EOB forms using PyTorch, Detectron2, and OCR tools",
-      "Engineered multi-stage orientation correction using text scoring, enabling reliable page rotation decisions",
-      "Improved OCR accuracy with skew correction, Gaussian blur, and morphological filters on EOB document",
-    ],
-    tech: ["Python", "OpenCV", "OCR", "pytesseract", "NumPy", "TensorFlow", "Tesseract", "Docker"],
-    startDate: "June 2025",
-    endDate: "Present",
-  },
+  // {
+  //   imgSrc: noIcon,
+  //   label: "EOB Processor",
+  //   position: "Software Engineer Intern",
+  //   desc: [
+  //     "Built a document processing pipeline for healthcare EOB forms using PyTorch, Detectron2, and OCR tools",
+  //     "Engineered multi-stage orientation correction using text scoring, enabling reliable page rotation decisions",
+  //     "Improved OCR accuracy with skew correction, Gaussian blur, and morphological filters on EOB document",
+  //   ],
+  //   tech: ["Python", "OpenCV", "OCR", "pytesseract", "NumPy", "TensorFlow", "Tesseract", "Docker"],
+  //   startDate: "June 2025",
+  //   endDate: "Present",
+  // },
   {
     imgSrc: inzone,
     label: "Inzone",
