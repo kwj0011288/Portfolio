@@ -21,7 +21,7 @@ const workItem = [
     tech: [
       "Python",
       "OpenCV",
-      "OCR",
+      "Deepdoctection",
       "pytesseract",
       "NumPy",
       "TensorFlow",
