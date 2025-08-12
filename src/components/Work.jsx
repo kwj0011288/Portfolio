@@ -11,7 +11,7 @@ import noIcon from "../assets/works/no_icon.png";
 const workItem = [
   {
     imgSrc: noIcon,
-    label: "EOB Processor",
+    label: "EOB Automation Processor",
     position: "Software Engineer Intern",
     desc: [
       <>
