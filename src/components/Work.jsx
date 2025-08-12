@@ -12,7 +12,7 @@ const workItem = [
   {
     imgSrc: noIcon,
     label: "EOB Automation Processor",
-    position: "Software Engineer Intern",
+    position: "Software Engineer",
     desc: [
       <>
         Using <strong>Python</strong> and{" "}
