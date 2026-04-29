@@ -1,7 +1,7 @@
 /*Components*/
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import About from "./components/About";
+// import About from "./components/About";
 import Skill from "./components/Skill";
 import Projects from "./components/Projects";
 import Work from "./components/Work";
@@ -82,6 +82,21 @@ const App = () => {
         ease: "power2.out",
       });
     });
+
+    // Project cards: no scrub (avoids long fade / “blurry” first tile)
+    gsap.utils.toArray(".project-reveal").forEach((element) => {
+      gsap.to(element, {
+        scrollTrigger: {
+          trigger: element,
+          start: "top bottom-=60",
+          toggleActions: "play none none reverse",
+        },
+        opacity: 1,
+        y: 0,
+        duration: 0.45,
+        ease: "power2.out",
+      });
+    });
   });
 
   return (
@@ -101,7 +116,7 @@ const App = () => {
               </a>
             </p>
           </div> */}
-          <About />
+          {/* <About /> */}
 
           {/* <PersonalStatement /> */}
           <Skill />

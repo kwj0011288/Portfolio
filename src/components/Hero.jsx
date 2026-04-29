@@ -1,96 +1,107 @@
-import React from 'react'
-import { ButtonPrimary, ButtonOutline } from './Button'
-import me from '../assets/me.png';
-import resumePDF from '../assets/Wonjae Kim Resume.pdf';
-import wonjae from '../assets/wonjae.jpeg';
+import React, { useEffect, useState } from "react";
+import EmployeeCard from "./Employee_card/employee_card";
+
+const MD_MIN = "(min-width: 768px)";
 
 // 상태 정보: 필요한 만큼 추가 가능
 const statusMap = {
-    available: {
-        label: "Available for Work",
-        color: "bg-emerald-400",
-        ping: "animate-ping"
-    },
-    working: {
-        label: "Currently Working",
-        color: "bg-blue-400",
-        ping: "animate-ping"
-    },
-    internship: {
-        label: "Open to Internships",
-        color: "bg-yellow-400",
-        ping: "animate-ping"
-    },
-    incomingIntern: {
-        label: "Incoming Intern",
-        color: "bg-purple-400",
-        ping: "animate-ping"
-    },
-    unavailable: {
-        label: "Not Available",
-        color: "bg-red-400",
-        ping: "animate-none"
-    }
+  available: {
+    label: "Available for Work",
+    color: "bg-emerald-400",
+    ping: "animate-ping",
+  },
+  working: {
+    label: "Currently Working",
+    color: "bg-blue-400",
+    ping: "animate-ping",
+  },
+  internship: {
+    label: "Open to Internships",
+    color: "bg-yellow-400",
+    ping: "animate-ping",
+  },
+  incomingIntern: {
+    label: "Incoming Intern",
+    color: "bg-purple-400",
+    ping: "animate-ping",
+  },
+  unavailable: {
+    label: "Not Available",
+    color: "bg-red-400",
+    ping: "animate-none",
+  },
 };
-
 
 // 바꿔가면서 쓸 수 있음
 const currentStatus = "working"; // "working", "internship", "unavailable"
 
 const Hero = () => {
-    const status = statusMap[currentStatus];
+  const status = statusMap[currentStatus];
+  const [showIdCard, setShowIdCard] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia(MD_MIN).matches : false,
+  );
 
-    return (
-        <div>
-            <section id="home" className="pt-28 lg:pt-36">
-                <div className="container items-center lg:grid lg:grid-cols-2 lg:gap-10">
-                    <div>
-                        <div className="flex items-center gap-3 reveal-up">
-                            <figure className="img-box w-9 h-9 rounded-lg">
-                                <img src={me} alt="" width={40} height={40} className="rounded-lg" />
-                            </figure>
-                            <div className='flex items-center gap-2 text-zinc-400 text-sm tracking-wide'>
-                                <span className={`relative w-2 h-2 rounded-full ${status.color}`}>
-                                    <span className={`absolute inset-0 rounded-full ${status.color} ${status.ping}`}>
-                                    </span>
-                                </span>
-                                {status.label}
-                            </div>
-                        </div>
-                        <h2 className='headline-1 max-w-[15ch] sm:max-w-[20ch] lg:max-w-[15ch] mt-5 mb-3'>
-                            Wonjae Kim
-                        </h2>
-                        <p className='text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 font-medium text-lg tracking-wide mb-2'>
-                            Software Engineer & Full-Stack Developer
-                        </p>
-                        <p className='text-zinc-400 text-lg mb-6 lg:mb-8 italic'>
-                            Senior Computer Science Student at UMCP
-                        </p>
-                        <div className='flex items-center gap-3'>
-                            <ButtonPrimary
-                                label="Resume"
-                                icon="download"
-                                href={resumePDF}
-                                target="_blank"
-                            />
+  useEffect(() => {
+    const mq = window.matchMedia(MD_MIN);
+    const sync = () => setShowIdCard(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
-                            <ButtonOutline
-                                href="#about"
-                                label="Scroll Down"
-                                icon="arrow_downward"
-                            />
-                        </div>
-                    </div>
+  return (
+    <div>
+      <section id="about" className="relative overflow-visible">
+        {showIdCard ? (
+          <div className="absolute top-0 left-0 z-0 w-full h-[min(100dvh,960px)]">
+            <EmployeeCard />
+          </div>
+        ) : null}
 
-                    <div className='hidden lg:block'>
-                        <figure className='w-full max-w-[480px] ml-auto bg-gradient-to-t from-sky-400 via-25% via-sky-400 to-65% rounded-[60px]'>
-                            <img src={wonjae} alt="Wonjae Kim" width={500} height={500} className="rounded-2xl" />
-                        </figure>
-                    </div>
-                </div>
-            </section>
+        <div className="relative z-10 pointer-events-none">
+          <div className="container">
+            <div className="w-full max-w-3xl pt-28 pb-10 lg:pt-40 lg:pb-20 lg:w-[60%] xl:w-[55%]">
+              <div className="reveal-up mb-5 flex items-center gap-2 text-sm tracking-wide text-zinc-500 dark:text-zinc-400 lg:mb-6">
+                <span
+                  className={`relative inline-flex h-2 w-2 rounded-full ${status.color}`}
+                >
+                  <span
+                    className={`absolute inset-0 rounded-full ${status.color} ${status.ping}`}
+                  />
+                </span>
+                <span className="font-medium text-zinc-700 dark:text-zinc-300">
+                  {status.label}
+                </span>
+              </div>
+              {/* Reference-style headline: I am [name] / role */}
+              <h1 className="reveal-up text-pretty">
+                <span className="text-[2rem] font-normal leading-[1.15] tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
+                  I am{" "}
+                </span>
+                <span className="headline-1 text-[2rem] font-semibold leading-[1.15] sm:text-4xl lg:text-[2.75rem] lg:leading-[1.12]">
+                  Wonjae Kim
+                </span>
+              </h1>
+              <p className="mt-1 text-pretty text-[2rem] font-normal leading-[1.15] tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-4xl lg:mt-2 lg:text-[2.75rem] lg:leading-[1.12]">
+                a Software Engineer
+              </p>
+
+              <p className="mt-8 max-w-xl text-pretty text-lg font-normal leading-relaxed text-zinc-900 dark:text-zinc-400 lg:mt-10 lg:text-xl">
+                Full-stack engineer focused on AI automation, mobile apps, SaaS,
+                and production backends.
+              </p>
+
+              <p className="mt-6 max-w-xl text-pretty text-base font-normal leading-relaxed text-zinc-900 dark:text-zinc-100 lg:mt-8">
+                CTO @ Dentalmon, creating clean and reliable software
+                experiences through thoughtful engineering and attention to
+                detail.
+              </p>
+            </div>
+          </div>
         </div>
-    )
-}
+      </section>
+    </div>
+  );
+};
 
-export default Hero
+export default Hero;

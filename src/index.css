@@ -46,19 +46,15 @@ body {
 /*---- utlizity -----*/
 .material-symbols-rounded {
   @apply w-[1em] h-[1em] overflow-hidden;
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
 }
 
 .container {
   @apply px-4 mx-auto lg:px-8 xl:max-w-6xl;
-}
-
-.img-box {
-  @apply bg-zinc-700 overflow-hidden;
-}
-
-.light .img-box {
-  @apply bg-zinc-200;
 }
 
 .img-cover {
@@ -77,11 +73,16 @@ body {
   @apply translate-y-20 opacity-0;
 }
 
+/* Project cards: opacity only (no translate) — avoids text/layer jitter with Lenis + ScrollTrigger */
+.project-reveal {
+  @apply opacity-0;
+}
+
 /* ----- components ----- */
 
 /*menu btn*/
 .menu-btn {
-  @apply w-10 h-10 grid place-items-center bg-zinc-50/10 rounded-xl 
+  @apply w-9 h-9 grid place-items-center bg-zinc-50/10 rounded-lg 
   ring-inset ring-1 ring-zinc-50/[0.02]
   backdrop-blur-2xl hover:bg-zinc-50/15 transition duration-300 ease-in-out transform active:scale-95;
 }
@@ -96,11 +97,12 @@ body {
 
 /* ----- navBar ----- */
 .navbar {
-  @apply absolute top-full mt-2 right-0 min-w-40 p-2 
-    bg-zinc-50/10 rounded-2xl ring-inset ring-1 ring-zinc-50/5
-    scale-90 isolate blur-sm opacity-0 invisible transition-all duration-300 ease-in-out
-    md:static md:flex md:items-center md:mt-0 md:opacity-100 md:blur-0
-    md:visible md:scale-100 backdrop-blur-2xl;
+  @apply pointer-events-none absolute top-full left-0 z-50 mt-1.5 min-w-36 origin-top-right px-1.5 py-1
+    isolate bg-zinc-50/10 opacity-0 backdrop-blur-2xl
+    rounded-xl ring-inset ring-1 ring-zinc-50/5
+    max-md:transition-opacity max-md:duration-300 max-md:ease-out
+    md:pointer-events-auto md:static md:z-auto md:mt-0 md:origin-center md:flex md:items-center md:py-1 md:opacity-100
+    md:transition-none;
 }
 
 .light .navbar {
@@ -108,11 +110,11 @@ body {
 }
 
 .navbar.active {
-  @apply opacity-100 scale-100 blur-0 visible;
+  @apply pointer-events-auto opacity-100;
 }
 
 .nav-link {
-  @apply grid items-center h-9 px-4 text-sm font-medium tracking-wide text-zinc-50/50 hover:text-zinc-50 transition-all duration-300 ease-in-out;
+  @apply grid items-center h-9 px-2.5 text-xs font-medium tracking-wide text-zinc-50/50 hover:text-zinc-50 transition-all duration-300 ease-in-out md:px-3 md:text-[13px];
 }
 
 .light .nav-link {
@@ -120,19 +122,11 @@ body {
 }
 
 .nav-link.active {
-  @apply text-zinc-900 duration-500;
+  @apply text-zinc-50 font-semibold;
 }
 
 .light .nav-link.active {
-  @apply text-zinc-50;
-}
-
-.navbar .active-box {
-  @apply absolute bg-zinc-50 rounded-lg -z-10 transition-all duration-500 ease-in-out;
-}
-
-.light .navbar .active-box {
-  @apply bg-zinc-800;
+  @apply text-zinc-900 font-semibold;
 }
 
 /*button*/
@@ -210,13 +204,13 @@ body {
   @apply ring-sky-400;
 }
 
-/* Header styles */
+/* Header: bar itself transparent; glass lives on .navbar only */
 header {
-  @apply bg-gradient-to-b from-zinc-900 to-zinc-900;
+  @apply bg-transparent;
 }
 
 .light header {
-  @apply bg-gradient-to-b from-zinc-50 to-zinc-50;
+  @apply bg-transparent;
 }
 
 /* Theme toggle button */

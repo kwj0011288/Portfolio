@@ -11,7 +11,7 @@ import noIcon from "../assets/works/no_icon.png";
 const workItem = [
   {
     imgSrc: noIcon,
-    label: "EOB Automation Processor",
+    label: "Dentalmon",
     position: "Software Engineer",
     desc: [
       <>
@@ -58,21 +58,30 @@ const workItem = [
     position: "Software Engineer Intern",
     desc: [
       <>
-        Developed and deployed{" "}
-        <strong>AI character generation algorithms</strong>, integrating them
-        into the frontend to create interactive experiences, resulting in higher{" "}
-        <strong>user engagement</strong> and <strong>retention</strong>.
+        Built an end-to-end <strong>AI avatar generation pipeline</strong> in
+        Flutter, routing text prompts through a custom{" "}
+        <strong>Google Cloud Run</strong> API to <strong>Meshy AI</strong> for
+        3D model synthesis (GLB/OBJ), and embedded a{" "}
+        <strong>Ready Player Me</strong> iframe editor via a React/Vite
+        frontend, enabling users to create personalized 3D characters from a
+        single prompt.
       </>,
       <>
-        Integrated <strong>ChatGPT</strong>, <strong>Ready Player Me</strong>,{" "}
-        <strong>Meshy AI</strong>, and connected <strong>ElevenLabs</strong>{" "}
-        with <strong>Firebase</strong> to enable real-time voice conversations
-        using in-app currency.
+        Engineered a real-time <strong>voice conversation system</strong>{" "}
+        connecting on-device <strong>speech-to-text</strong>,{" "}
+        <strong>ChatGPT</strong> character AI, and{" "}
+        <strong>ElevenLabs TTS</strong>, with per-character voice profiles
+        stored in <strong>Firebase</strong> Firestore and a coin-based
+        monetization layer (25 coins/session) that tracks balance, deducts in a
+        transaction, and logs conversation analytics.
       </>,
       <>
-        Optimized <strong>frontend performance</strong> by fixing{" "}
-        <strong>lag issues</strong> and implemented a{" "}
-        <strong>user reporting system</strong> to enhance community safety.
+        Eliminated <strong>video feed lag</strong> by implementing an LRU video
+        player cache (cap: 3 simultaneous players) with visibility-based
+        autoplay at 50% viewport threshold; also shipped a{" "}
+        <strong>dual user reporting system</strong> covering post and
+        participant reports with reason dialogs persisted to{" "}
+        <strong>Firebase</strong> Firestore for moderation review.
       </>,
     ],
 
@@ -144,23 +153,58 @@ const workItem = [
     position: "Co-founder",
     desc: [
       <>
-        <strong>Co-founded</strong> and led development of{" "}
-        <strong>"August"</strong>, a college scheduler app for{" "}
-        <strong>Android</strong> and <strong>iOS</strong> using{" "}
-        <strong>Flutter</strong>, focusing on a user-friendly interface and
-        cross-platform compatibility.
+        <strong>Co-founded</strong> and led full-stack development of{" "}
+        <strong>August</strong>, a college scheduler app published on the{" "}
+        <strong>App Store</strong> and <strong>Google Play</strong>, built with{" "}
+        <strong>Flutter</strong> for seamless <strong>Android</strong> and{" "}
+        <strong>iOS</strong> cross-platform support.
       </>,
       <>
-        Created an innovative <strong>scheduling algorithm</strong> analyzing
-        available slots, open seats, and user preferences.
+        Engineered a custom{" "}
+        <strong>recursive backtracking scheduling algorithm</strong> that
+        generates all conflict-free timetable combinations from selected
+        courses, filtering by <strong>open seat availability</strong>,{" "}
+        <strong>minimum/maximum break intervals</strong>,{" "}
+        <strong>consecutive class limits</strong>, and{" "}
+        <strong>earliest start time</strong> preferences in real time.
       </>,
       <>
-        Integrated <strong>20+ RESTful APIs</strong> and utilized{" "}
-        <strong>web scraping</strong> for real-time data from school websites.
+        Built a <strong>Django REST Framework</strong> backend with{" "}
+        <strong>PostgreSQL</strong>, <strong>Redis</strong>, and{" "}
+        <strong>AWS S3</strong>; implemented{" "}
+        <strong>JWT-based authentication</strong> with <strong>Google</strong>{" "}
+        and <strong>Apple OAuth</strong> via <strong>django-allauth</strong> and{" "}
+        <strong>dj-rest-auth</strong>.
       </>,
       <>
-        Gained experience in <strong>MVP release</strong>,{" "}
-        <strong>Beta testing</strong>, and team collaboration.
+        Developed an <strong>async web scraper</strong> using{" "}
+        <strong>BeautifulSoup4</strong> and{" "}
+        <strong>ThreadPoolExecutor (20 workers)</strong> to concurrently scrape
+        real-time course data (including <strong>open seats</strong>,{" "}
+        <strong>waitlist counts</strong>, <strong>instructors</strong>,{" "}
+        <strong>meeting times</strong>, and{" "}
+        <strong>building/room locations</strong>) from UMD's Testudo across all
+        departments and semesters.
+      </>,
+      <>
+        Designed a <strong>social friend system</strong> with time-limited{" "}
+        <strong>invite codes</strong>, friend schedule sharing, and a{" "}
+        <strong>Group Hangout</strong> feature that computes shared free time
+        intervals across multiple users' timetables simultaneously.
+      </>,
+      <>
+        Integrated <strong>20+ RESTful APIs</strong> on the Flutter frontend
+        using <strong>Provider</strong> state management; built features
+        including <strong>GPA tracking with charts</strong>,{" "}
+        <strong>dynamic app icons</strong>, <strong>home screen widgets</strong>
+        , <strong>AdMob ads</strong>, <strong>in-app review</strong>, and{" "}
+        <strong>OTA hot updates via Shorebird</strong>.
+      </>,
+      <>
+        Shipped through the full product lifecycle: <strong>MVP release</strong>
+        , <strong>Beta testing</strong>, <strong>App Store deployment</strong>,
+        and iterative updates, with <strong>Firebase Analytics</strong>{" "}
+        instrumented throughout key user flows.
       </>,
     ],
 

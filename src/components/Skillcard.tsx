@@ -1,14 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
+import useCardTilt from "../hooks/useCardTilt";
 
 const SkillCard = ({ imgSrc, label, desc, className }) => {
+  const tilt = useCardTilt({
+    maxRotateX: 2,
+    maxRotateY: 4,
+    maxTranslateX: 4,
+    maxTranslateY: 2,
+  });
+
   return (
     <div
+      {...tilt.handlers}
+      style={tilt.style}
       className={`flex items-center gap-3 rounded-2xl p-3 transition-all 
       bg-white dark:bg-zinc-800
       ring-1 ring-zinc-200 dark:ring-zinc-50/10
       hover:bg-zinc-50 dark:hover:bg-zinc-700/50
       hover:ring-zinc-300 dark:hover:ring-zinc-50/20
+      motion-reduce:transform-none
       ${className}`}
     >
       <figure
