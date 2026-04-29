@@ -27,7 +27,7 @@ const App = () => {
   const [theme, setTheme] = useState(() => {
     // Check for stored preference or use system preference
     const savedTheme = localStorage.getItem("theme");
-    return savedTheme || "dark";
+    return savedTheme || "light";
   });
 
   useEffect(() => {
