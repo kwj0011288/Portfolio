@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  .lenis::-webkit-scrollbar,
+  .lenis body::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  html,
+  body,
+  .lenis,
+  .lenis body {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
 /* ----- base styles ----- */
 
 html {
@@ -82,7 +101,7 @@ body {
 
 /*menu btn*/
 .menu-btn {
-  @apply w-9 h-9 grid place-items-center bg-zinc-50/10 rounded-lg 
+  @apply w-10 h-10 grid place-items-center bg-zinc-50/10 rounded-xl 
   ring-inset ring-1 ring-zinc-50/[0.02]
   backdrop-blur-2xl hover:bg-zinc-50/15 transition duration-300 ease-in-out transform active:scale-95;
 }
@@ -97,9 +116,9 @@ body {
 
 /* ----- navBar ----- */
 .navbar {
-  @apply pointer-events-none absolute top-full left-0 z-50 mt-1.5 min-w-36 origin-top-right px-1.5 py-1
+  @apply pointer-events-none absolute top-full left-0 z-50 mt-2 min-w-48 origin-top-right px-2 py-2
     isolate bg-zinc-50/10 opacity-0 backdrop-blur-2xl
-    rounded-xl ring-inset ring-1 ring-zinc-50/5
+    rounded-2xl ring-inset ring-1 ring-zinc-50/5
     max-md:transition-opacity max-md:duration-300 max-md:ease-out
     md:pointer-events-auto md:static md:z-auto md:mt-0 md:origin-center md:flex md:items-center md:py-1 md:opacity-100
     md:transition-none;
@@ -114,7 +133,7 @@ body {
 }
 
 .nav-link {
-  @apply grid items-center h-9 px-2.5 text-xs font-medium tracking-wide text-zinc-50/50 hover:text-zinc-50 transition-all duration-300 ease-in-out md:px-3 md:text-[13px];
+  @apply grid items-center h-11 rounded-xl px-4 text-sm font-medium tracking-wide text-zinc-50/50 hover:text-zinc-50 transition-all duration-300 ease-in-out md:h-9 md:px-3 md:text-[13px];
 }
 
 .light .nav-link {
@@ -216,15 +235,6 @@ header {
 /* Theme toggle button */
 .light .ThemeToggle button {
   @apply bg-zinc-800/10 ring-zinc-800/[0.02] hover:bg-zinc-800/15;
-}
-
-/* Scrollbar styling */
-.dark {
-  @apply scrollbar-thumb-zinc-800 scrollbar-track-zinc-500;
-}
-
-.light {
-  @apply scrollbar-thumb-zinc-300 scrollbar-track-zinc-100;
 }
 
 /* About section light mode */

@@ -7,7 +7,7 @@ import DrTeragotchi from "../assets/projects/DrTeragotchi.jpg";
 import Portfolio from "../assets//hero.png";
 import Ghostdiedie from "../assets/projects/ghostdiedie.png";
 
-const projects = [
+export const projects = [
   {
     imgSrc: august,
     title: "August - Me & Friends Timetable",
@@ -99,11 +99,14 @@ const projects = [
 
 const Projects = () => {
   return (
-    <section id="projects" className="section">
+    <section id="projects" className="section" aria-labelledby="projects-title">
       <div className="container">
-        <h2 className="headline-2 mb-8 reveal-up">Projects</h2>
+        <h2 id="projects-title" className="headline-2 mb-8 reveal-up">
+          Projects
+        </h2>
         <p className="text-zinc-400 mt-3 mb-10 max-w-[50ch] reveal-up">
-          Solving Real Problems Through Innovative Code and Design
+          Case studies in AI products, mobile apps, web engineering, and
+          full-stack software delivery.
         </p>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project, index) => (

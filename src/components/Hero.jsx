@@ -87,14 +87,14 @@ const Hero = () => {
               </p>
 
               <p className="mt-8 max-w-xl text-pretty text-lg font-normal leading-relaxed text-zinc-900 dark:text-zinc-400 lg:mt-10 lg:text-xl">
-                Full-stack engineer focused on AI automation, mobile apps, SaaS,
-                and production backends.
+                Full-stack software engineer focused on AI automation, mobile
+                apps, SaaS products, and production backend systems.
               </p>
 
               <p className="mt-6 max-w-xl text-pretty text-base font-normal leading-relaxed text-zinc-900 dark:text-zinc-100 lg:mt-8">
-                CTO @ Dentalmon, creating clean and reliable software
-                experiences through thoughtful engineering and attention to
-                detail.
+                I build reliable products across React, Flutter, Python, and
+                cloud infrastructure, with recent work spanning OCR pipelines,
+                real-time apps, and AI-powered user experiences.
               </p>
             </div>
           </div>

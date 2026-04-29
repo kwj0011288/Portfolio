@@ -8,7 +8,7 @@ import military from "../assets/works/military.jpeg";
 import inzone from "../assets/works/inzone.png";
 import noIcon from "../assets/works/no_icon.png";
 
-const workItem = [
+export const workItem = [
   {
     imgSrc: noIcon,
     label: "Dentalmon",
@@ -254,9 +254,11 @@ const workItem = [
 
 const Work = () => {
   return (
-    <section id="work" className="section pb-10">
+    <section id="work" className="section pb-10" aria-labelledby="work-title">
       <div className="container px-3 md:px-4">
-        <h2 className="headline-2 reveal-up">Work Experience</h2>
+        <h2 id="work-title" className="headline-2 reveal-up">
+          Work Experience
+        </h2>
 
         <p className="text-zinc-500 dark:text-zinc-400 mt-3 mb-6 md:mb-8 max-w-[50ch] reveal-up">
           My Journey as a Developer, Researcher, and Innovator

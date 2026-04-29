@@ -1,5 +1,12 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import PropTypes from "prop-types";
+import { useClickOutside } from "./hooks/useClickOutside";
 
 const NAV_ITEMS = [
   { label: "About", link: "#about" },
@@ -17,6 +24,7 @@ const Navbar = ({ navOpen, setNavOpen, menuButtonRef }) => {
     typeof window !== "undefined" ? window.matchMedia(MD_MAX).matches : false
   );
   const [menuCoords, setMenuCoords] = useState({ top: 0, right: 0 });
+  const navRef = useRef(null);
 
   useEffect(() => {
     const mm = window.matchMedia(MD_MAX);
@@ -40,6 +48,16 @@ const Navbar = ({ navOpen, setNavOpen, menuButtonRef }) => {
     window.addEventListener("resize", updateMenuAnchor);
     return () => window.removeEventListener("resize", updateMenuAnchor);
   }, [isMobile, updateMenuAnchor]);
+
+  useClickOutside({
+    ref: [navRef, menuButtonRef],
+    eventType: "pointerdown",
+    callback: () => {
+      if (isMobile && navOpen) {
+        setNavOpen?.(false);
+      }
+    },
+  });
 
   const handleClick = (event, link) => {
     event.preventDefault();
@@ -171,6 +189,7 @@ const Navbar = ({ navOpen, setNavOpen, menuButtonRef }) => {
 
   return (
     <nav
+      ref={navRef}
       id="site-nav"
       className={`navbar ${navOpen ? "active" : ""}`}
       style={mobileStyle}

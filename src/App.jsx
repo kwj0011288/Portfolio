@@ -8,6 +8,8 @@ import Work from "./components/Work";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import PersonalStatement from "./components/PersonalStatement";
+import { projects } from "./components/Projects";
+import { workItem } from "./components/Work";
 
 import { ReactLenis } from "lenis/react";
 import gsap from "gsap";
@@ -21,6 +23,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 export const ThemeContext = createContext();
 
 const App = () => {
+  const siteUrl = "https://wkim-dev.tech";
   const [theme, setTheme] = useState(() => {
     // Check for stored preference or use system preference
     const savedTheme = localStorage.getItem("theme");
@@ -41,6 +44,176 @@ const App = () => {
       root.classList.remove("dark");
     }
   }, [theme]);
+
+  useEffect(() => {
+    document.title = "Wonjae Kim | Software Engineer Portfolio";
+
+    const ensureMeta = (selector, attributes) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement("meta");
+        document.head.appendChild(element);
+      }
+
+      Object.entries(attributes).forEach(([key, value]) => {
+        element.setAttribute(key, value);
+      });
+    };
+
+    const ensureLink = (selector, attributes) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement("link");
+        document.head.appendChild(element);
+      }
+
+      Object.entries(attributes).forEach(([key, value]) => {
+        element.setAttribute(key, value);
+      });
+    };
+
+    ensureMeta('meta[name="description"]', {
+      name: "description",
+      content:
+        "Wonjae Kim is a software engineer building AI automation, mobile apps, SaaS products, and production backend systems.",
+    });
+    ensureMeta('meta[name="robots"]', {
+      name: "robots",
+      content: "index, follow, max-image-preview:large",
+    });
+    ensureMeta('meta[property="og:title"]', {
+      property: "og:title",
+      content: "Wonjae Kim | Software Engineer Portfolio",
+    });
+    ensureMeta('meta[property="og:description"]', {
+      property: "og:description",
+      content:
+        "Software engineer focused on AI automation, mobile apps, SaaS, and production backends.",
+    });
+    ensureMeta('meta[property="og:url"]', {
+      property: "og:url",
+      content: `${siteUrl}/`,
+    });
+    ensureMeta('meta[name="twitter:title"]', {
+      name: "twitter:title",
+      content: "Wonjae Kim | Software Engineer Portfolio",
+    });
+    ensureMeta('meta[name="twitter:description"]', {
+      name: "twitter:description",
+      content:
+        "Explore Wonjae Kim's software engineering work across AI automation, mobile apps, SaaS, and backend systems.",
+    });
+    ensureLink('link[rel="canonical"]', {
+      rel: "canonical",
+      href: `${siteUrl}/`,
+    });
+
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": `${siteUrl}/#person`,
+          name: "Wonjae Kim",
+          url: `${siteUrl}/`,
+          jobTitle: "Software Engineer",
+          description:
+            "Software engineer focused on AI automation, mobile apps, SaaS products, and production backend systems.",
+          email: "mailto:kwj0011288@gmail.com",
+          sameAs: [
+            "https://github.com/kwj0011288",
+            "https://www.linkedin.com/in/kwj0011288/",
+            "https://www.instagram.com/one_jae_kim",
+          ],
+          knowsAbout: [
+            "React",
+            "Flutter",
+            "Python",
+            "Django",
+            "FastAPI",
+            "OCR",
+            "Computer Vision",
+            "SaaS",
+            "Mobile App Development",
+            "Full-Stack Development",
+          ],
+          alumniOf: {
+            "@type": "CollegeOrUniversity",
+            name: "University of Maryland",
+          },
+        },
+        {
+          "@type": "WebSite",
+          "@id": `${siteUrl}/#website`,
+          url: `${siteUrl}/`,
+          name: "Wonjae Kim Portfolio",
+          description:
+            "Portfolio website for software engineer Wonjae Kim.",
+          inLanguage: "en",
+          publisher: {
+            "@id": `${siteUrl}/#person`,
+          },
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": `${siteUrl}/#profile-page`,
+          url: `${siteUrl}/`,
+          name: "Wonjae Kim | Software Engineer Portfolio",
+          isPartOf: {
+            "@id": `${siteUrl}/#website`,
+          },
+          about: {
+            "@id": `${siteUrl}/#person`,
+          },
+          mainEntity: {
+            "@id": `${siteUrl}/#person`,
+          },
+        },
+        {
+          "@type": "ItemList",
+          "@id": `${siteUrl}/#projects`,
+          name: "Software Engineering Projects",
+          itemListElement: projects.map((project, index) => ({
+            "@type": "CreativeWork",
+            position: index + 1,
+            name: project.title,
+            description: project.description,
+            url: project.projectLink || project.githubLink || `${siteUrl}/`,
+            keywords: project.tags.join(", "),
+          })),
+        },
+        {
+          "@type": "ItemList",
+          "@id": `${siteUrl}/#experience`,
+          name: "Work Experience",
+          itemListElement: workItem.map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "OrganizationRole",
+              roleName: item.position,
+              startDate: item.startDate,
+              endDate: item.endDate === "Present" ? undefined : item.endDate,
+              worksFor: {
+                "@type": "Organization",
+                name: item.label,
+              },
+              skills: item.tech.join(", "),
+            },
+          })),
+        },
+      ],
+    };
+
+    let script = document.getElementById("structured-data");
+    if (!script) {
+      script = document.createElement("script");
+      script.id = "structured-data";
+      script.type = "application/ld+json";
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(structuredData);
+  }, [siteUrl]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
