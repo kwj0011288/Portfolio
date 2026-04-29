@@ -89,7 +89,7 @@ export const projects = [
     confidential: false,
     isLive: true,
     tags: ["React", "Tailwind CSS", "JavaScript", "Vite"],
-    projectLink: "https://wkim-dev.tech",
+    projectLink: "https://kimwonjae.com",
     githubLink: "https://github.com/kwj0011288/Portfolio",
     brief: "This portfolio — built with React, Tailwind, and Vite.",
     description:

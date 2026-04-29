@@ -1,8 +1,8 @@
-# Wonjae Kim Portfolio
+# Wonjae Kim
 
 A modern and responsive portfolio website built with React, Vite, and Tailwind CSS. This website showcases my projects, skills, work experience, and provides a way to contact me.
 
-**Visit the live site:** [wkim-dev.tech](https://wkim-dev.tech)
+**Visit the live site:** [kimwonjae.com](https://kimwonjae.com)
 
 ## Features
 
@@ -77,7 +77,7 @@ The built files will be in the `.dist` directory.
 
 ## Deployment
 
-The site is deployed and available at [wkim-dev.tech](https://wkim-dev.tech).
+The site is deployed and available at [kimwonjae.com](https://kimwonjae.com).
 
 ## Recent Updates
 
@@ -94,5 +94,5 @@ MIT
 
 Feel free to reach out through the contact form on the website or connect with me via:
 
-- Website: [wkim-dev.tech](https://wkim-dev.tech)
+- Website: [kimwonjae.com](https://kimwonjae.com)
 - GitHub: [github.com/your-username](https://github.com/your-username)

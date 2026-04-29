@@ -23,7 +23,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 export const ThemeContext = createContext();
 
 const App = () => {
-  const siteUrl = "https://wkim-dev.tech";
+  const siteUrl = "https://kimwonjae.com";
   const [theme, setTheme] = useState(() => {
     // Check for stored preference or use system preference
     const savedTheme = localStorage.getItem("theme");
@@ -46,7 +46,7 @@ const App = () => {
   }, [theme]);
 
   useEffect(() => {
-    document.title = "Wonjae Kim | Software Engineer Portfolio";
+    document.title = "Wonjae Kim";
 
     const ensureMeta = (selector, attributes) => {
       let element = document.head.querySelector(selector);
@@ -83,7 +83,7 @@ const App = () => {
     });
     ensureMeta('meta[property="og:title"]', {
       property: "og:title",
-      content: "Wonjae Kim | Software Engineer Portfolio",
+      content: "Wonjae Kim",
     });
     ensureMeta('meta[property="og:description"]', {
       property: "og:description",
@@ -96,7 +96,7 @@ const App = () => {
     });
     ensureMeta('meta[name="twitter:title"]', {
       name: "twitter:title",
-      content: "Wonjae Kim | Software Engineer Portfolio",
+      content: "Wonjae Kim",
     });
     ensureMeta('meta[name="twitter:description"]', {
       name: "twitter:description",
@@ -146,9 +146,9 @@ const App = () => {
           "@type": "WebSite",
           "@id": `${siteUrl}/#website`,
           url: `${siteUrl}/`,
-          name: "Wonjae Kim Portfolio",
+          name: "Wonjae Kim",
           description:
-            "Portfolio website for software engineer Wonjae Kim.",
+            "Personal website for Wonjae Kim.",
           inLanguage: "en",
           publisher: {
             "@id": `${siteUrl}/#person`,
@@ -158,7 +158,7 @@ const App = () => {
           "@type": "ProfilePage",
           "@id": `${siteUrl}/#profile-page`,
           url: `${siteUrl}/`,
-          name: "Wonjae Kim | Software Engineer Portfolio",
+          name: "Wonjae Kim",
           isPartOf: {
             "@id": `${siteUrl}/#website`,
           },
@@ -280,12 +280,12 @@ const App = () => {
           <Hero />
           {/* <div className="text-center mt-8">
             <p className="text-lg text-gray-500 dark:text-gray-400">
-              Please check wkim-dev.tech website before{" "}
+              Please check kimwonjae.com website before{" "}
               <a
-                href="https://wkim-dev.tech"
+                href="https://kimwonjae.com"
                 className="text-blue-500 underline"
               >
-                wkim-dev.tech
+                kimwonjae.com
               </a>
             </p>
           </div> */}
