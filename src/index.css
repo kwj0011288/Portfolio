@@ -102,16 +102,24 @@ body {
 /*menu btn*/
 .menu-btn {
   @apply w-10 h-10 grid place-items-center bg-zinc-50/10 rounded-xl 
-  ring-inset ring-1 ring-zinc-50/[0.02]
-  backdrop-blur-2xl hover:bg-zinc-50/15 transition duration-300 ease-in-out transform active:scale-95;
+  ring-inset ring-1 ring-zinc-50/5 text-zinc-50/70
+  backdrop-blur-2xl hover:bg-zinc-50/15 hover:text-zinc-50 transition duration-300 ease-in-out transform active:scale-95;
 }
 
 .light .menu-btn {
-  @apply bg-zinc-800/10 ring-zinc-800/[0.02] hover:bg-zinc-800/15;
+  @apply bg-zinc-800/10 ring-zinc-800/5 text-zinc-900/70 hover:bg-zinc-800/15 hover:text-zinc-900;
 }
 
 .menu-btn span {
-  @apply text-zinc-400;
+  @apply text-current;
+}
+
+.theme-toggle-btn img {
+  @apply opacity-70 transition-opacity duration-300;
+}
+
+.theme-toggle-btn:hover img {
+  @apply opacity-100;
 }
 
 /* ----- navBar ----- */
@@ -122,6 +130,16 @@ body {
     max-md:transition-opacity max-md:duration-300 max-md:ease-out
     md:pointer-events-auto md:static md:z-auto md:mt-0 md:origin-center md:flex md:items-center md:py-1 md:opacity-100
     md:transition-none;
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    @apply min-w-0 w-fit max-w-[calc(100vw-1rem)] rounded-2xl px-1.5 py-1.5;
+  }
+
+  .nav-link {
+    @apply h-10 px-3 text-sm whitespace-nowrap;
+  }
 }
 
 .light .navbar {
@@ -233,10 +251,6 @@ header {
 }
 
 /* Theme toggle button */
-.light .ThemeToggle button {
-  @apply bg-zinc-800/10 ring-zinc-800/[0.02] hover:bg-zinc-800/15;
-}
-
 /* About section light mode */
 .light .bg-zinc-800\/50 {
   @apply bg-zinc-100 text-zinc-800;

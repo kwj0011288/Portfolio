@@ -22,14 +22,18 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="flex shrink-0 items-center justify-end">
-                    <a href={resumePDF} target="_blank" rel="noreferrer" className="btn btn-secondary hidden md:inline-flex items-center gap-1">
-                        Resume
-                    </a>
-
-                    <div className="hidden md:block ml-3">
+                    <div className="order-2 ml-2 md:order-2 md:ml-3">
                         <ThemeToggle />
                     </div>
-                    <div className="flex max-md:pl-3 md:hidden">
+                    <a
+                        href={resumePDF}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn btn-secondary order-1 inline-flex items-center gap-1 md:order-1 md:ml-0"
+                    >
+                        Resume
+                    </a>
+                    <div className="order-3 flex pl-3 md:hidden">
                         <button
                             type="button"
                             ref={menuBtnRef}
