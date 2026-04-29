@@ -21,19 +21,19 @@ const Header = () => {
                         <Navbar navOpen={navOpen} setNavOpen={setNavOpen} menuButtonRef={menuBtnRef} />
                     </div>
                 </div>
-                <div className="flex shrink-0 items-center justify-end">
-                    <div className="order-2 ml-2 md:order-2 md:ml-3">
+                <div className="flex shrink-0 items-center justify-end gap-2 md:gap-3">
+                    <div className="order-2">
                         <ThemeToggle />
                     </div>
                     <a
                         href={resumePDF}
                         target="_blank"
                         rel="noreferrer"
-                        className="btn btn-secondary order-1 inline-flex items-center gap-1 md:order-1 md:ml-0"
+                        className="btn btn-secondary order-1 inline-flex items-center gap-1"
                     >
                         Resume
                     </a>
-                    <div className="order-3 flex pl-3 md:hidden">
+                    <div className="order-3 flex md:hidden">
                         <button
                             type="button"
                             ref={menuBtnRef}
