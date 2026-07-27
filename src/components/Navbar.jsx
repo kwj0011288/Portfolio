@@ -13,13 +13,18 @@ const NAV_ITEMS = [
   { label: "Skills", link: "#skills" },
   { label: "Experience", link: "#work" },
   { label: "Projects", link: "#projects" },
+  { label: "Blog", link: "#blog" },
   { label: "Contact", link: "#contact" },
 ];
 
 const MD_MAX = "(max-width: 767px)";
 
 const Navbar = ({ navOpen, setNavOpen, menuButtonRef }) => {
-  const [activeSection, setActiveSection] = useState("about");
+  const [activeSection, setActiveSection] = useState(() =>
+    typeof window !== "undefined" && window.location.hash.startsWith("#/blog")
+      ? "blog"
+      : "about"
+  );
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== "undefined" ? window.matchMedia(MD_MAX).matches : false
   );
@@ -60,18 +65,36 @@ const Navbar = ({ navOpen, setNavOpen, menuButtonRef }) => {
   });
 
   const handleClick = (event, link) => {
-    event.preventDefault();
+    // Route-style links (e.g. "#/blog") navigate pages instead of scrolling
+    // to an in-page section, so let the browser handle the hash change.
+    if (!link.startsWith("#/")) {
+      event.preventDefault();
 
-    document.querySelectorAll(".nav-link").forEach((l) => {
-      l.classList.remove("active");
-    });
+      document.querySelectorAll(".nav-link").forEach((l) => {
+        l.classList.remove("active");
+      });
 
-    event.currentTarget.classList.add("active");
+      event.currentTarget.classList.add("active");
 
-    const target = document.querySelector(link);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
-      setActiveSection(link.substring(1));
+      const onBlogRoute = window.location.hash.startsWith("#/blog");
+
+      if (onBlogRoute) {
+        // The homepage sections aren't mounted while viewing a blog page, so
+        // navigate home first, then scroll once the section exists.
+        window.location.hash = link;
+        setActiveSection(link.substring(1));
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            document.querySelector(link)?.scrollIntoView({ behavior: "smooth" });
+          });
+        });
+      } else {
+        const target = document.querySelector(link);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+          setActiveSection(link.substring(1));
+        }
+      }
     }
 
     if (typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches) {
@@ -83,6 +106,11 @@ const Navbar = ({ navOpen, setNavOpen, menuButtonRef }) => {
     const sections = NAV_ITEMS.map((item) => item.link.substring(1));
 
     const handleScroll = () => {
+      if (window.location.hash.startsWith("#/blog")) {
+        setActiveSection("blog");
+        return;
+      }
+
       let foundActive = false;
 
       const isAtBottom =
@@ -169,10 +197,12 @@ const Navbar = ({ navOpen, setNavOpen, menuButtonRef }) => {
     };
 
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("hashchange", handleScroll);
     handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("hashchange", handleScroll);
     };
   }, [activeSection]);
 

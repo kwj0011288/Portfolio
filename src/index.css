@@ -25,16 +25,21 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  @apply bg-zinc-900;
 }
 
 body {
   @apply bg-zinc-900 text-zinc-50;
+  overflow-x: hidden;
 }
 
+.dark html,
 .dark body {
   @apply bg-zinc-900 text-zinc-50;
 }
 
+.light html,
 .light body {
   @apply bg-zinc-50 text-zinc-900;
 }
@@ -80,6 +85,31 @@ body {
   @apply object-cover w-full h-full;
 }
 
+/* Fallback blog thumbnail texture: subtle dot grid over a gradient */
+.bg-thumbnail-dots {
+  background-image: radial-gradient(circle, rgba(24, 24, 27, 0.12) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.dark .bg-thumbnail-dots {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+}
+
+/* Keep fenced code readable independently from the inline-code theme. */
+.blog-prose pre,
+.light .blog-prose pre {
+  color: #f4f4f5;
+}
+
+.blog-prose pre code,
+.light .blog-prose pre code,
+.dark .blog-prose pre code {
+  color: inherit !important;
+  background: transparent !important;
+  padding: 0 !important;
+  font-size: inherit;
+}
+
 .section {
   @apply pt-20 lg:pt-32;
 }
@@ -92,7 +122,7 @@ body {
   @apply translate-y-20 opacity-0;
 }
 
-/* Project cards: opacity only (no translate) — avoids text/layer jitter with Lenis + ScrollTrigger */
+/* Project cards: opacity only (no translate), avoids text/layer jitter with Lenis + ScrollTrigger */
 .project-reveal {
   @apply opacity-0;
 }
@@ -498,4 +528,13 @@ header {
 
 .light .light-statement-block {
   @apply bg-zinc-300/50 hover:bg-zinc-300 ring-zinc-800/5 hover:ring-zinc-800/10;
+}
+
+/* The blog article wrapper carries `prose-code:bg-zinc-100` in its class list,
+   which the broad `.light [class*="bg-zinc-100"]` rule above wrongly paints
+   white, leaving a seam against the zinc-50 page. Keep it transparent so it
+   inherits the page background in both themes. */
+.light .blog-prose,
+.dark .blog-prose {
+  background-color: transparent;
 }

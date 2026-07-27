@@ -7,7 +7,7 @@ const WorkCard = ({ experience }) => {
 
   return (
     <div className="flex flex-col md:flex-row items-start gap-4 md:gap-5 group">
-      {/* 왼쪽: 날짜 - 데스크탑에서만 표시 */}
+      {/* 왼쪽: 날짜, 데스크탑에서만 표시 */}
       <div className="hidden md:flex md:flex-col md:items-end justify-start min-w-28 pt-2">
         <div className="dark:text-zinc-200 light:text-zinc-800 text-base font-medium">
           {startDate}
@@ -17,7 +17,7 @@ const WorkCard = ({ experience }) => {
         </div>
       </div>
 
-      {/* 중간: 아이콘 - 데스크탑에서만 표시 */}
+      {/* 중간: 아이콘, 데스크탑에서만 표시 */}
       <div className="hidden md:flex flex-col items-center relative">
         <div className="w-12 h-12 rounded-lg dark:bg-zinc-800/90 light:bg-white light:shadow-sm light:ring-1 light:ring-zinc-900/10 p-1.5 z-10 flex items-center justify-center">
           <figure className="w-full h-full overflow-hidden">
@@ -32,7 +32,7 @@ const WorkCard = ({ experience }) => {
 
       {/* 오른쪽: 카드 컨텐츠 */}
       <div className="flex-1 w-full">
-        {/* 모바일 전용 헤더 - 박스 바깥으로 이동 */}
+        {/* 모바일 전용 헤더, 박스 바깥으로 이동 */}
         <div className="flex md:hidden items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             {/* 모바일에서만 표시되는 아이콘 */}

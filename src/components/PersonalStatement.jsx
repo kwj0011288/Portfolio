@@ -45,7 +45,7 @@ const PersonalStatement = () => {
                 that assess couple compatibility and research that involved
                 simulations. I enjoy both the visual design and the code, but
                 what excites me most is using technology to solve meaningful
-                human problems—whether it is stress, confusion, or the feeling
+                human problems, whether it is stress, confusion, or the feeling
                 of being alone. I want to build tools that are helpful, kind,
                 and easy to use.
                 <br />

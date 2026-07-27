@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 import tailwindScrollbar from 'tailwind-scrollbar';
+import tailwindTypography from '@tailwindcss/typography';
 export default {
   content: [
     "./index.html",
@@ -13,6 +14,6 @@ export default {
       },
     },
   },
-  plugins: [tailwindScrollbar],
+  plugins: [tailwindScrollbar, tailwindTypography],
   darkMode: 'class'
 }

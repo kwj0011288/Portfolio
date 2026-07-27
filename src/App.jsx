@@ -8,14 +8,23 @@ import Work from "./components/Work";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import PersonalStatement from "./components/PersonalStatement";
+import Blog from "./components/Blog";
+import BlogPost from "./components/BlogPost";
+import BlogSection from "./components/BlogSection";
 import { projects } from "./components/Projects";
 import { workItem } from "./components/Work";
+
+import {
+  LanguageContext,
+  readStoredLanguage,
+  storeLanguage,
+} from "./lib/language";
 
 import { ReactLenis } from "lenis/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useLayoutEffect } from "react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -219,6 +228,34 @@ const App = () => {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
 
+  // Blog reading language. English is the default; the choice is remembered
+  // so it carries across posts.
+  const [language, setLanguage] = useState(readStoredLanguage);
+
+  useEffect(() => {
+    storeLanguage(language);
+  }, [language]);
+
+  const [route, setRoute] = useState(() =>
+    typeof window !== "undefined" ? window.location.hash : ""
+  );
+
+  useEffect(() => {
+    const onHashChange = () => setRoute(window.location.hash);
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  const blogMatch = route.match(/^#\/blog(?:\/(.+))?$/);
+
+  useLayoutEffect(() => {
+    if (!route.startsWith("#/blog")) return;
+
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [route]);
+
   useGSAP(() => {
     // 일반 reveal-up 애니메이션
     const elements = gsap.utils.toArray(".reveal-up:not(.work-reveal)");
@@ -270,35 +307,36 @@ const App = () => {
         ease: "power2.out",
       });
     });
-  });
+  }, [route]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <LanguageContext.Provider value={{ language, setLanguage }}>
       <ReactLenis root>
         <Header />
         <main>
-          <Hero />
-          {/* <div className="text-center mt-8">
-            <p className="text-lg text-gray-500 dark:text-gray-400">
-              Please check kimwonjae.com website before{" "}
-              <a
-                href="https://kimwonjae.com"
-                className="text-blue-500 underline"
-              >
-                kimwonjae.com
-              </a>
-            </p>
-          </div> */}
-          {/* <About /> */}
-
-          {/* <PersonalStatement /> */}
-          <Skill />
-          <Work />
-          <Projects />
-          <Contact />
+          {blogMatch ? (
+            blogMatch[1] ? (
+              <BlogPost slug={blogMatch[1]} />
+            ) : (
+              <Blog />
+            )
+          ) : (
+            <>
+              <Hero />
+              {/* <About /> */}
+              {/* <PersonalStatement /> */}
+              <Skill />
+              <Work />
+              <Projects />
+              <BlogSection />
+              <Contact />
+            </>
+          )}
         </main>
         <Footer />
       </ReactLenis>
+      </LanguageContext.Provider>
     </ThemeContext.Provider>
   );
 };

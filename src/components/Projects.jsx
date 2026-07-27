@@ -17,7 +17,7 @@ export const projects = [
     tags: ["Flutter", "REST API", "Django", "Web Scraping"],
     projectLink: "https://apps.apple.com/app/id6469464765",
     brief:
-      "Smart timetable app for UMD students — filters, friend schedules, and shared free time.",
+      "Smart timetable app for UMD students: filters, friend schedules, and shared free time.",
     description:
       "A mobile-first scheduling app for University of Maryland students that automatically generates course timetables based on class availability and user preferences. Built with Flutter and Python (Django), the app allows users to apply filters like no morning classes or back-to-back sessions, and view friends' schedules to find shared free time. A web version is currently in development to expand access across platforms.",
   },
@@ -64,9 +64,9 @@ export const projects = [
     tags: ["Flutter", "FastAPI", "Supabase", "OpenAI", "PostgreSQL"],
     githubLink: "https://github.com/kwj0011288/Dr-Teragotchi",
     brief:
-      "AI virtual pet for mental well-being — daily check-ins, emotional responses, and gamified growth.",
+      "AI virtual pet for mental well-being: daily check-ins, emotional responses, and gamified growth.",
     description:
-      "An AI pet that responds to your emotions for mental well-being — daily chat, points, and growth in a gamified format.",
+      "An AI pet that responds to your emotions for mental well-being, with daily chat, points, and growth in a gamified format.",
   },
   {
     imgSrc: Ghostdiedie,
@@ -78,9 +78,9 @@ export const projects = [
     projectLink: "https://ghostdiedie.surf/",
     githubLink: "https://github.com/kwj0011288/ghostdiedie-bitcamp2026",
     brief:
-      "Browser 1v1 3D fighter where your webcam pose controls attacks — no install needed.",
+      "Browser 1v1 3D fighter where your webcam pose controls attacks, with no install needed.",
     description:
-      "Browser-based 1v1 3D fighting game: webcam pose drives attacks, FastAPI + WebSocket combat, WebRTC live video, Supabase for users and matches — no app install.",
+      "Browser-based 1v1 3D fighting game: webcam pose drives attacks, FastAPI + WebSocket combat, WebRTC live video, Supabase for users and matches, and no app install.",
   },
   {
     imgSrc: Portfolio,
@@ -91,7 +91,7 @@ export const projects = [
     tags: ["React", "Tailwind CSS", "JavaScript", "Vite"],
     projectLink: "https://kimwonjae.com",
     githubLink: "https://github.com/kwj0011288/Portfolio",
-    brief: "This portfolio — built with React, Tailwind, and Vite.",
+    brief: "This portfolio, built with React, Tailwind, and Vite.",
     description:
       "This portfolio website showcases projects and skills with interactive 3D elements and a clean, readable layout.",
   },
