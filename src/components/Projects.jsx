@@ -10,16 +10,16 @@ import Ghostdiedie from "../assets/projects/ghostdiedie.png";
 export const projects = [
   {
     imgSrc: august,
-    title: "August - Me & Friends Timetable",
-    role: "Frontend Developer",
+    title: "August - Automated Course Scheduling",
+    role: "Co-Founder & Lead Software Engineer",
     confidential: true,
     isLive: false,
-    tags: ["Flutter", "REST API", "Django", "Web Scraping"],
-    projectLink: "https://apps.apple.com/app/id6469464765",
+    tags: ["Flutter", "Django REST Framework", "Python", "BeautifulSoup", "Web Scraping"],
+    // projectLink: "https://apps.apple.com/app/id6469464765",
     brief:
-      "Smart timetable app for UMD students: filters, friend schedules, and shared free time.",
+      "Automated course scheduling app used by 220+ students, generating conflict-free timetables in under 1 minute.",
     description:
-      "A mobile-first scheduling app for University of Maryland students that automatically generates course timetables based on class availability and user preferences. Built with Flutter and Python (Django), the app allows users to apply filters like no morning classes or back-to-back sessions, and view friends' schedules to find shared free time. A web version is currently in development to expand access across platforms.",
+      "Co-founded, built, and launched an automated course scheduling app used by 220+ students from June 2023 to May 2025. Built with Flutter and Django REST Framework, the app uses a backtracking algorithm to generate conflict-free timetable options in under 1 minute based on seat availability and student preferences. A multithreaded Python and BeautifulSoup web scraper synchronizes UMD course offerings, seat availability, instructors, and meeting times with the Django backend.",
   },
   {
     imgSrc: coupleai,
@@ -70,17 +70,17 @@ export const projects = [
   },
   {
     imgSrc: Ghostdiedie,
-    title: "Ghostdiedie",
-    role: "FULLSTACK & CV",
+    title: "Ghostdiedie - Motion-Controlled 3D Fighter",
+    role: "Team Lead & Full-Stack Developer",
     confidential: false,
-    isLive: true,
-    tags: ["React", "Three.js", "FastAPI", "Supabase", "WebRTC", "MediaPipe"],
+    isLive: false,
+    tags: ["React", "Three.js", "FastAPI", "MediaPipe", "WebSockets"],
     projectLink: "https://ghostdiedie.surf/",
     githubLink: "https://github.com/kwj0011288/ghostdiedie-bitcamp2026",
     brief:
-      "Browser 1v1 3D fighter where your webcam pose controls attacks, with no install needed.",
+      "Webcam-controlled, two-player 3D fighting game built by a 4-person team in April 2026.",
     description:
-      "Browser-based 1v1 3D fighting game: webcam pose drives attacks, FastAPI + WebSocket combat, WebRTC live video, Supabase for users and matches, and no app install.",
+      "Led a 4-person team to build a webcam-controlled, two-player 3D fighting game in April 2026, personally developing the React/Three.js frontend and FastAPI backend. Implemented MediaPipe gesture controls with player calibration, coordinate correction, visibility filtering, and cooldown tuning, plus animated combat and custom face textures attached to avatar skeletons. WebSockets synchronize player movement, server-calculated damage, and round countdowns; corrected player assignment and prevented premature attacks.",
   },
   {
     imgSrc: Portfolio,

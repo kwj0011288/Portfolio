@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const WorkCard = ({ experience }) => {
-  const { imgSrc, label, desc, startDate, endDate, tech, position } =
+  const { imgSrc, label, desc, startDate, endDate, tech, position, location } =
     experience;
 
   return (
@@ -53,6 +53,7 @@ const WorkCard = ({ experience }) => {
               {position && (
                 <div className="text-xs text-zinc-600 dark:text-zinc-300">
                   {position}
+                  {location && <span className="block">{location}</span>}
                 </div>
               )}
             </div>
@@ -78,6 +79,7 @@ const WorkCard = ({ experience }) => {
             {position && (
               <div className="text-base mt-1 text-zinc-600 dark:text-zinc-300">
                 {position}
+                {location && <span className="block text-sm mt-1">{location}</span>}
               </div>
             )}
           </div>
@@ -119,6 +121,7 @@ WorkCard.propTypes = {
     startDate: PropTypes.string.isRequired,
     endDate: PropTypes.string.isRequired,
     position: PropTypes.string,
+    location: PropTypes.string,
   }).isRequired,
 };
 
