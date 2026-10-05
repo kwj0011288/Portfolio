@@ -57,7 +57,7 @@ export const workItem = [
         <strong>Meshy AI</strong>, and <strong>ElevenLabs</strong> APIs to
         generate personalized{" "}
         <strong>3D avatars with synthesized voices</strong>, increasing average
-        session time by <strong>2x</strong>.
+        session time by <strong>2x </strong>.
       </>,
       <>
         Built a <strong>Ready Player Me</strong> avatar customization flow in a{" "}
