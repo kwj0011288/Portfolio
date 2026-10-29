@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { useEffect, useMemo, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import { Canvas, extend, useFrame } from "@react-three/fiber";
 import {
   BallCollider,
@@ -28,12 +29,38 @@ const segmentProps = {
   linearDamping: 2,
 };
 
-export default function EmployeeCard() {
+export default function EmployeeCard({ isMobile = false }) {
+  const containerRef = useRef(null);
+  const [inView, setInView] = useState(true);
+  const [pageVisible, setPageVisible] = useState(() => !document.hidden);
+  const [nudge, setNudge] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
   const [isLight, setIsLight] = useState(
     () =>
       typeof document !== "undefined" &&
       document.documentElement.classList.contains("light"),
   );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      setInView(entry.isIntersecting);
+    });
+    observer.observe(containerRef.current);
+
+    const onVisibilityChange = () => setPageVisible(!document.hidden);
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onMotionChange = () => setReducedMotion(motionQuery.matches);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    motionQuery.addEventListener("change", onMotionChange);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      motionQuery.removeEventListener("change", onMotionChange);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -48,19 +75,51 @@ export default function EmployeeCard() {
     return () => observer.disconnect();
   }, []);
 
+  const active = inView && pageVisible;
+  const swingCard = () => setNudge((value) => value + 1);
+
   return (
-    <div className="relative h-full w-full">
+    <div
+      ref={containerRef}
+      className="relative h-full w-full rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+      style={{ touchAction: "pan-y pinch-zoom" }}
+      role={isMobile ? "button" : undefined}
+      tabIndex={isMobile ? 0 : undefined}
+      aria-label={isMobile ? "Swing Wonjae's 3D ID card" : undefined}
+      onClick={isMobile ? swingCard : undefined}
+      onKeyDown={isMobile ? (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            swingCard();
+          }
+        } : undefined}
+    >
       <Canvas
-        camera={{ position: [0, 0, 13], fov: 25 }}
-        gl={{ alpha: true, antialias: true }}
+        key={isMobile ? "mobile" : "desktop"}
+        camera={{ position: [0, 0, isMobile ? 15 : 13], fov: 25 }}
+        dpr={[1, isMobile ? 1.5 : 2]}
+        frameloop={active ? "always" : "demand"}
+        gl={{ alpha: true, antialias: !isMobile }}
+        style={{ touchAction: "pan-y pinch-zoom" }}
         onCreated={({ gl, scene }) => {
           scene.background = null;
           gl.setClearColor(new THREE.Color(0x000000), 0);
         }}
       >
         <ambientLight intensity={Math.PI} />
-        <Physics interpolate gravity={[0, -38, 0]} timeStep={1 / 60}>
-          <Badge isLight={isLight} />
+        <Physics
+          interpolate
+          gravity={[0, -38, 0]}
+          timeStep={1 / 60}
+          paused={!active}
+        >
+          <Badge
+            isLight={isLight}
+            isMobile={isMobile}
+            active={active}
+            reducedMotion={reducedMotion}
+            nudge={nudge}
+          />
         </Physics>
         <Environment blur={0.75}>
           <Lightformer
@@ -97,7 +156,19 @@ export default function EmployeeCard() {
   );
 }
 
-function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
+EmployeeCard.propTypes = {
+  isMobile: PropTypes.bool,
+};
+
+function Badge({
+  maxSpeed = 50,
+  minSpeed = 10,
+  isLight = false,
+  isMobile,
+  active,
+  reducedMotion,
+  nudge,
+}) {
   const band = useRef(null);
   const fixed = useRef(null);
   const j1 = useRef(null);
@@ -105,6 +176,7 @@ function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
   const j3 = useRef(null);
   const card = useRef(null);
   const hoverIntent = useRef({ x: 0, y: 0 });
+  const lastNudge = useRef(nudge);
 
   const vec = new THREE.Vector3();
   const ang = new THREE.Vector3();
@@ -112,6 +184,9 @@ function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
   const dir = new THREE.Vector3();
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
+  const ropeLength = isMobile ? 0.95 : 0.48;
+  // Start above the resting position so gravity produces the entrance drop.
+  const startSettled = isMobile && reducedMotion;
 
   const { nodes, materials } = useGLTF(TAG_GLB);
 
@@ -183,9 +258,9 @@ function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
       ]),
   );
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.48]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.48]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.48]);
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], ropeLength]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], ropeLength]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], ropeLength]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
     [0, 1.5, 0],
@@ -200,6 +275,7 @@ function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
 
   useFrame((state, delta) => {
     if (
+      !active ||
       !fixed.current ||
       !j1.current ||
       !j2.current ||
@@ -208,6 +284,15 @@ function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
       !card.current
     ) {
       return;
+    }
+
+    if (lastNudge.current !== nudge) {
+      card.current.applyImpulse(
+        { x: nudge % 2 ? 0.08 : -0.08, y: 0, z: 0.01 },
+        true,
+      );
+      card.current.applyTorqueImpulse({ x: 0, y: 0.003, z: 0.004 }, true);
+      lastNudge.current = nudge;
     }
 
     if (dragged) {
@@ -246,8 +331,15 @@ function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
     ang.copy(card.current.angvel());
     rot.copy(card.current.rotation());
 
-    const hoverX = hovered && !dragged ? hoverIntent.current.x : 0;
-    const hoverY = hovered && !dragged ? hoverIntent.current.y : 0;
+    const idleSway = isMobile && !reducedMotion
+      ? Math.sin(state.clock.elapsedTime * 1.2) * 0.12
+      : 0;
+    const hoverX = isMobile
+      ? idleSway
+      : hovered && !dragged ? hoverIntent.current.x : 0;
+    const hoverY = !isMobile && hovered && !dragged
+      ? hoverIntent.current.y
+      : 0;
     const targetAngX = -hoverY * 0.45 - rot.x * 0.9;
     const targetAngY = -hoverX * 0.95 - rot.y * 1.35;
     const bandTargetX = hoverX * 1.35;
@@ -291,27 +383,40 @@ function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
 
   return (
     <>
-      <group position={[2.1, 3.3, 0]}>
+      <group position={isMobile ? [1.05, 3.35, 0] : [2.1, 3.3, 0]}>
         <RigidBody ref={fixed} type="fixed" position={[0, 0, 0]} />
-        <RigidBody position={[0.5, 0, 0]} {...segmentProps} ref={j1}>
+        <RigidBody
+          position={startSettled ? [0.05, -ropeLength, 0] : [0.5, 0, 0]}
+          {...segmentProps}
+          ref={j1}
+        >
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1, 0, 0]} {...segmentProps} ref={j2}>
+        <RigidBody
+          position={startSettled ? [0.1, -ropeLength * 2, 0] : [1, 0, 0]}
+          {...segmentProps}
+          ref={j2}
+        >
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[1.5, 0, 0]} {...segmentProps} ref={j3}>
+        <RigidBody
+          position={startSettled ? [0.15, -ropeLength * 3, 0] : [1.5, 0, 0]}
+          {...segmentProps}
+          ref={j3}
+        >
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
           ref={card}
           {...segmentProps}
+          position={startSettled ? [0.15, -ropeLength * 3 - 1.5, 0] : [0, 0, 0]}
           type={dragged ? "kinematicPosition" : "dynamic"}
         >
           <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
             scale={2.25}
             position={[0, -1.2, -0.05]}
-            onPointerOver={() => hover(true)}
+            onPointerOver={() => !isMobile && hover(true)}
             onPointerOut={() => {
               hover(false);
               hoverIntent.current.x = 0;
@@ -323,6 +428,7 @@ function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
               card.current?.wakeUp();
             }}
             onPointerMove={(evt) => {
+              if (isMobile) return;
               const localPoint = evt.eventObject.worldToLocal(evt.point.clone());
               hoverIntent.current.x = THREE.MathUtils.clamp(localPoint.x / 0.8, -1, 1);
               hoverIntent.current.y = THREE.MathUtils.clamp(localPoint.y / 1.1, -1, 1);
@@ -332,7 +438,9 @@ function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
               card.current?.wakeUp();
             }}
             onPointerUp={() => drag(false)}
+            onPointerCancel={() => drag(false)}
             onPointerDown={(evt) =>
+              !isMobile &&
               card.current &&
               drag(
                 new THREE.Vector3()
@@ -344,7 +452,7 @@ function Badge({ maxSpeed = 50, minSpeed = 10, isLight = false }) {
             <mesh geometry={nodes.card.geometry}>
               <meshPhysicalMaterial
                 map={photoTexture}
-                map-anisotropy={16}
+                map-anisotropy={isMobile ? 4 : 16}
                 clearcoat={1}
                 clearcoatRoughness={0.15}
                 roughness={0.3}

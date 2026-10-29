@@ -31,7 +31,9 @@ html {
 
 body {
   @apply bg-zinc-900 text-zinc-50;
-  overflow-x: hidden;
+  /* Clip horizontal overflow without creating a nested vertical scroll container
+     that can consume touch gestures before the viewport scrolls. */
+  overflow-x: clip;
 }
 
 .dark html,

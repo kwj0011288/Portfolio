@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EmployeeCard from "./Employee_card/employee_card";
 
-const MD_MIN = "(min-width: 768px)";
+const MOBILE_QUERY = "(max-width: 767px)";
 
 // 상태 정보: 필요한 만큼 추가 가능
 const statusMap = {
@@ -37,13 +37,13 @@ const currentStatus = "working"; // "working", "internship", "unavailable"
 
 const Hero = () => {
   const status = statusMap[currentStatus];
-  const [showIdCard, setShowIdCard] = useState(() =>
-    typeof window !== "undefined" ? window.matchMedia(MD_MIN).matches : false,
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia(MOBILE_QUERY).matches : false,
   );
 
   useEffect(() => {
-    const mq = window.matchMedia(MD_MIN);
-    const sync = () => setShowIdCard(mq.matches);
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const sync = () => setIsMobile(mq.matches);
     sync();
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
@@ -52,11 +52,9 @@ const Hero = () => {
   return (
     <div>
       <section id="about" className="relative overflow-visible">
-        {showIdCard ? (
-          <div className="absolute top-0 left-0 z-0 w-full h-[min(100dvh,960px)]">
-            <EmployeeCard />
-          </div>
-        ) : null}
+        <div className="absolute inset-x-0 top-0 bottom-12 z-0 w-full max-md:blur-[4px] max-md:opacity-[0.45] max-md:dark:opacity-[0.35] md:bottom-auto md:h-[min(100dvh,960px)]">
+          <EmployeeCard isMobile={isMobile} />
+        </div>
 
         <div className="relative z-10 pointer-events-none">
           <div className="container">
