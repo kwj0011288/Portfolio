@@ -225,7 +225,7 @@ const Work = () => {
         </p>
 
         {/* 워크 카드 컨테이너 */}
-        <div className="relative work-reveal pt-2">
+        <div className="relative pt-2">
           <div className="relative space-y-8 md:space-y-8">
             {workItem.map((experience, key) => (
               <div key={key} className="reveal-up mb-8 md:mb-0">

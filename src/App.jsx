@@ -20,7 +20,7 @@ import {
   storeLanguage,
 } from "./lib/language";
 
-import { ReactLenis } from "lenis/react";
+import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -248,6 +248,36 @@ const App = () => {
 
   const blogMatch = route.match(/^#\/blog(?:\/(.+))?$/);
 
+  useEffect(() => {
+    const media = window.matchMedia(
+      "(min-width: 768px) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+    );
+    let cleanup = () => {};
+
+    const sync = () => {
+      cleanup();
+      cleanup = () => {};
+      if (!media.matches) return;
+
+      const lenis = new Lenis({ autoRaf: false });
+      const tick = (time) => lenis.raf(time * 1000);
+      lenis.on("scroll", ScrollTrigger.update);
+      gsap.ticker.add(tick);
+
+      cleanup = () => {
+        gsap.ticker.remove(tick);
+        lenis.destroy();
+      };
+    };
+
+    sync();
+    media.addEventListener("change", sync);
+    return () => {
+      media.removeEventListener("change", sync);
+      cleanup();
+    };
+  }, []);
+
   useLayoutEffect(() => {
     if (!route.startsWith("#/blog")) return;
 
@@ -257,62 +287,70 @@ const App = () => {
   }, [route]);
 
   useGSAP(() => {
-    // 일반 reveal-up 애니메이션
-    const elements = gsap.utils.toArray(".reveal-up:not(.work-reveal)");
-    elements.forEach((element) => {
-      gsap.to(element, {
-        scrollTrigger: {
-          trigger: element,
-          scrub: true,
-          start: "-200 bottom",
-          end: "bottom 80%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power2.inOut",
-      });
-    });
+    const media = gsap.matchMedia();
+    media.add(
+      {
+        mobile: "(max-width: 767px), (pointer: coarse)",
+        desktop: "(min-width: 768px)",
+        reducedMotion: "(prefers-reduced-motion: reduce)",
+      },
+      ({ conditions }) => {
+        const elements = gsap.utils.toArray(".reveal-up, .project-reveal")
+          .filter((element) => element.getClientRects().length > 0);
 
-    // Work 섹션용 빠른 애니메이션
-    const workElements = gsap.utils.toArray(".work-reveal");
-    workElements.forEach((element) => {
-      gsap.to(element, {
-        scrollTrigger: {
-          trigger: element,
-          scrub: false,
-          start: "-150 bottom",
-          end: "bottom 80%",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power2.out",
-      });
-    });
+        if (conditions.reducedMotion) {
+          gsap.set(elements, { opacity: 1, y: 0 });
+          return;
+        }
 
-    // Project cards: no scrub (avoids long fade / “blurry” first tile)
-    gsap.utils.toArray(".project-reveal").forEach((element) => {
-      gsap.to(element, {
-        scrollTrigger: {
-          trigger: element,
-          start: "top bottom-=60",
-          toggleActions: "play none none reverse",
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.45,
-        ease: "power2.out",
-      });
-    });
-  }, [route]);
+        if (conditions.mobile) {
+          // Native CSS transitions keep reveals independent of Safari's scroll events.
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add("is-revealed");
+              observer.unobserve(entry.target);
+            });
+          }, { rootMargin: "0px 0px -24px 0px" });
+
+          elements.forEach((element) => {
+            element.classList.add("mobile-reveal");
+            observer.observe(element);
+          });
+
+          return () => {
+            observer.disconnect();
+            elements.forEach((element) => {
+              element.classList.remove("mobile-reveal", "is-revealed");
+            });
+          };
+        }
+
+        elements.forEach((element) => {
+          const isProject = element.classList.contains("project-reveal");
+          gsap.to(element, {
+            scrollTrigger: {
+              trigger: element,
+              scrub: !isProject,
+              start: isProject ? "top bottom-=60" : "-200 bottom",
+              ...(!isProject && { end: "bottom 80%" }),
+              toggleActions: "play none none reverse",
+            },
+            opacity: 1,
+            y: 0,
+            duration: isProject ? 0.45 : 1,
+            ease: isProject ? "power2.out" : "power2.inOut",
+          });
+        });
+      },
+    );
+
+    return () => media.revert();
+  }, { dependencies: [route], revertOnUpdate: true });
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <LanguageContext.Provider value={{ language, setLanguage }}>
-      <ReactLenis root>
         <Header />
         <main>
           {blogMatch ? (
@@ -335,7 +373,6 @@ const App = () => {
           )}
         </main>
         <Footer />
-      </ReactLenis>
       </LanguageContext.Provider>
     </ThemeContext.Provider>
   );

@@ -97,8 +97,9 @@ export default function EmployeeCard({ isMobile = false }) {
       <Canvas
         key={isMobile ? "mobile" : "desktop"}
         camera={{ position: [0, 0, isMobile ? 15 : 13], fov: 25 }}
-        dpr={[1, isMobile ? 1.5 : 2]}
-        frameloop={active ? "always" : "demand"}
+        dpr={isMobile ? 1 : [1, 2]}
+        frameloop={active ? "always" : "never"}
+        resize={{ scroll: false }}
         gl={{ alpha: true, antialias: !isMobile }}
         style={{ touchAction: "pan-y pinch-zoom" }}
         onCreated={({ gl, scene }) => {
@@ -161,8 +162,6 @@ EmployeeCard.propTypes = {
 };
 
 function Badge({
-  maxSpeed = 50,
-  minSpeed = 10,
   isLight = false,
   isMobile,
   active,
@@ -185,6 +184,11 @@ function Badge({
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
   const ropeLength = isMobile ? 0.95 : 0.48;
+  const bandSegments = isMobile ? 16 : 32;
+  const bandPoints = useMemo(
+    () => Array.from({ length: bandSegments + 1 }, () => new THREE.Vector3()),
+    [bandSegments],
+  );
   // Start above the resting position so gravity produces the entrance drop.
   const startSettled = isMobile && reducedMotion;
 
@@ -273,7 +277,7 @@ function Badge({
     }
   }, [hovered, dragged]);
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (
       !active ||
       !fixed.current ||
@@ -307,26 +311,12 @@ function Badge({
       });
     }
 
-    const [j1Lerped, j2Lerped] = [j1, j2].map((ref) => {
-      if (!ref.current) return undefined;
-
-      const lerped = new THREE.Vector3().copy(ref.current.translation());
-      const clampedDistance = Math.max(
-        0.1,
-        Math.min(1, lerped.distanceTo(ref.current.translation())),
-      );
-
-      return lerped.lerp(
-        ref.current.translation(),
-        delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)),
-      );
-    });
-
     curve.points[0].copy(j3.current.translation());
-    curve.points[1].copy(j2Lerped ?? j2.current.translation());
-    curve.points[2].copy(j1Lerped ?? j1.current.translation());
+    curve.points[1].copy(j2.current.translation());
+    curve.points[2].copy(j1.current.translation());
     curve.points[3].copy(fixed.current.translation());
-    band.current.geometry.setPoints(curve.getPoints(32));
+    bandPoints.forEach((point, index) => curve.getPoint(index / bandSegments, point));
+    band.current.geometry.setPoints(bandPoints);
 
     ang.copy(card.current.angvel());
     rot.copy(card.current.rotation());
