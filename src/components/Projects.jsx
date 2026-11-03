@@ -14,7 +14,14 @@ export const projects = [
     role: "Co-Founder & Lead Software Engineer",
     confidential: true,
     isLive: false,
-    tags: ["Flutter", "Django REST Framework", "Python", "BeautifulSoup", "Web Scraping"],
+    tags: [
+      "Flutter",
+      "Django REST Framework",
+      "Python",
+      "BeautifulSoup",
+      "Web Scraping",
+    ],
+    githubLink: "https://github.com/orgs/August-App-Team/repositories",
     // projectLink: "https://apps.apple.com/app/id6469464765",
     brief:
       "Automated course scheduling app used by 220+ students, generating conflict-free timetables in under 1 minute.",
